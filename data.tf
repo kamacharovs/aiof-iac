@@ -48,8 +48,7 @@ resource "azurerm_postgresql_server" "aiof_postgres_server" {
   auto_grow_enabled            = false
 
   public_network_access_enabled    = true
-  ssl_enforcement_enabled          = true
-  ssl_minimal_tls_version_enforced = "TLS1_2"
+  ssl_enforcement_enabled          = false
 
   tags = {
     env = var.env
