@@ -7,6 +7,7 @@ variable env {}
 
 variable db_admin_username {}
 variable db_admin_password {}
+variable db_admin_start_ip {}
 
 
 provider "azurerm" {
@@ -55,10 +56,18 @@ resource "azurerm_postgresql_server" "aiof_postgres_server" {
   }
 }
 
-resource "azurerm_postgresql_database" "example" {
+resource "azurerm_postgresql_database" "aiof_postgres_db" {
   name                = "AIOF"
   resource_group_name = azurerm_resource_group.aiof_rg.name
   server_name         = azurerm_postgresql_server.aiof_postgres_server.name
   charset             = "UTF8"
   collation           = "English_United States.1252"
+}
+
+resource "azurerm_postgresql_firewall_rule" "example" {
+  name                = "ClientIPAddressAdmin"
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  server_name         = azurerm_postgresql_server.aiof_postgres_server.name
+  start_ip_address    = var.db_admin_start_ip
+  end_ip_address      = var.db_admin_start_ip
 }
