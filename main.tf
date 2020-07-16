@@ -1,15 +1,3 @@
-variable subscription_id {}
-variable tenant_id {}
-variable client_id {}
-variable client_secret {}
-variable location {}
-variable env {}
-
-variable db_admin_username {}
-variable db_admin_password {}
-variable db_admin_start_ip {}
-
-
 provider "azurerm" {
  version = "~> 2.19.0"
 
@@ -21,7 +9,6 @@ provider "azurerm" {
  features {}
 }
 
-
 resource "azurerm_resource_group" "aiof_rg" {
   name     = "aiof-${var.env}"
   location = var.location
@@ -30,7 +17,6 @@ resource "azurerm_resource_group" "aiof_rg" {
     env = var.env
   }
 }
-
 
 resource "azurerm_postgresql_server" "aiof_postgres_server" {
   name                = "aiof-${var.env}"
