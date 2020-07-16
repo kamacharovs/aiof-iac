@@ -64,15 +64,17 @@ resource "azurerm_virtual_network" "aiof_vnet" {
     enable = true
   }
 
-  subnet {
-    name           = "backends"
-    address_prefix = "10.2.3.0/24"
-    security_group = azurerm_network_security_group.aiof_vnet_nsg.id
-  }
-
   tags = {
     env = var.env
   }
+}
+
+resource "azurerm_subnet" "aiof_backends" {
+  name                 = "backends"
+  resource_group_name  = azurerm_resource_group.aiof_rg.name
+  virtual_network_name = azurerm_virtual_network.aiof_vnet.name
+  address_prefixes     = ["10.2.3.0/24"]
+  service_endpoints    = ["Microsoft.Sql"]
 }
 
 
@@ -107,4 +109,12 @@ resource "azurerm_postgresql_database" "aiof_postgres_db" {
   server_name         = azurerm_postgresql_server.aiof_postgres_server.name
   charset             = "UTF8"
   collation           = "English_United States.1252"
+}
+
+resource "azurerm_postgresql_virtual_network_rule" "example" {
+  name                                 = "postgresql-vnet-rule"
+  resource_group_name                  = azurerm_resource_group.aiof_rg.name
+  server_name                          = azurerm_postgresql_server.aiof_postgres_server.name
+  subnet_id                            = azurerm_subnet.aiof_backends.id
+  ignore_missing_vnet_service_endpoint = false
 }
