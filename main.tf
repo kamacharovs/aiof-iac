@@ -30,13 +30,13 @@ resource "azurerm_network_security_group" "aiof_vnet_nsg" {
 }
 
 resource "azurerm_network_security_rule" "aiof_vnet_nsg_rule" {
-  name                        = "DatabaseAdminInbound"
+  name                        = "PostgreSQLDatabaseAdminInbound"
   priority                    = 100
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "*"
   source_port_range           = "*"
-  destination_port_range      = "80,443"
+  destination_port_range      = "80,443,5432"
   source_address_prefix       = var.db_admin_start_ip
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.aiof_rg.name
@@ -116,5 +116,5 @@ resource "azurerm_postgresql_virtual_network_rule" "example" {
   resource_group_name                  = azurerm_resource_group.aiof_rg.name
   server_name                          = azurerm_postgresql_server.aiof_postgres_server.name
   subnet_id                            = azurerm_subnet.aiof_backends.id
-  ignore_missing_vnet_service_endpoint = false
+  ignore_missing_vnet_service_endpoint = true
 }
