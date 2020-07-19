@@ -19,6 +19,13 @@ resource "azurerm_resource_group" "aiof_rg" {
 }
 
 
+/*
+ * Networking
+ * - Network security group with rule for IP of DB Admin
+ * - DDOS protection plan
+ * - Virtual network
+ * - Subnet
+ */
 resource "azurerm_network_security_group" "aiof_vnet_nsg" {
   name                = "vnet-${var.env}-${var.location}-nsg"
   location            = azurerm_resource_group.aiof_rg.location
@@ -79,6 +86,12 @@ resource "azurerm_subnet" "aiof_backends" {
 
 
 
+/*
+ * SQL Database
+ * - PostgreSQL server
+ * - PostgreSQL database
+ * - Virtual network rule for DB Admin
+ */
 resource "azurerm_postgresql_server" "aiof_postgres_server" {
   name                = "aiof-${var.env}"
   location            = azurerm_resource_group.aiof_rg.location
