@@ -1,6 +1,6 @@
 # Overview
 
-All in one finance infrastructure as code
+All in one finance infrastructure as code, specific to an environment (Dev, QA, Stage, Prod, etc.)
 
 ## Documentation
 
@@ -26,3 +26,19 @@ db_admin_username = ""
 db_admin_password = ""
 db_admin_start_ip = ""
 ```
+
+### Resources
+
+Networking
+- Network security group
+- Network security group rules
+- DDOS protection plan
+- Virtual network
+- Subnet: backend
+
+Database
+- PostgreSQL server
+- PostgreSQL database
+
+Container registry
+- Azure Container Registry
