@@ -87,6 +87,23 @@ resource "azurerm_subnet" "aiof_backends" {
 
 
 /*
+ * Container Registry
+ */
+resource "azurerm_container_registry" "aiof_cr" {
+  name                     = "aiof${var.env}"
+  resource_group_name      = azurerm_resource_group.aiof_rg.name
+  location                 = azurerm_resource_group.aiof_rg.location
+  sku                      = "Basic"
+  admin_enabled            = false
+
+  tags = {
+    env = var.env
+  }
+}
+
+
+
+/*
  * SQL Database
  * - PostgreSQL server
  * - PostgreSQL database
