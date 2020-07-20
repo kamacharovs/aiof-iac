@@ -64,7 +64,7 @@ resource "azurerm_virtual_network" "aiof_vnet" {
   name                = "vnet-${var.env}-${var.location}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
-  address_space       = ["10.0.0.0/16"]
+  address_space       = ["10.0.0.0/8"]
 
   ddos_protection_plan {
     id     = azurerm_network_ddos_protection_plan.aiof_ddos_pp.id
@@ -82,6 +82,13 @@ resource "azurerm_subnet" "aiof_backends" {
   virtual_network_name = azurerm_virtual_network.aiof_vnet.name
   address_prefixes     = ["10.2.3.0/24"]
   service_endpoints    = ["Microsoft.Sql"]
+}
+
+resource "azurerm_subnet" "aiof_kube" {
+  name                 = "kube"
+  resource_group_name  = azurerm_resource_group.aiof_rg.name
+  virtual_network_name = azurerm_virtual_network.aiof_vnet.name
+  address_prefixes     = ["10.240.0.0/16"]
 }
 
 
