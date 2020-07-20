@@ -35,3 +35,8 @@ variable "db_admin_password" {
 variable "db_admin_start_ip" {
   description = "Database admin IP address"
 }
+
+variable "kubernetes_version" {
+  description = "Kubernetes version"
+  default = "1.17"
+}

@@ -166,7 +166,7 @@ resource "azurerm_kubernetes_cluster" "aiof_aks" {
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
   dns_prefix          = "aiof-${var.env}"
-  kubernetes_version  = 1.17
+  kubernetes_version  = var.kubernetes_version
   sku_tier            = "Free"
 
   default_node_pool {
