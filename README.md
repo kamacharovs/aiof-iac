@@ -6,6 +6,10 @@ All in one finance infrastructure as code, specific to an environment (Dev, QA, 
 
 All documentation for this specific repository
 
+### GitHub Repositories
+
+- [jcorioland/tf-aks-kubenet](https://github.com/jcorioland/tf-aks-kubenet/blob/master/tf/aks.tf) - example of how Kubernetes is deployed to Azure
+
 ### Versioning
 
 Terraform undergoes a lot of versioning and new updates. In order to keep this updated, we can look at the latest release on their [GitHub](https://github.com/terraform-providers/terraform-provider-azurerm). The current version used is `~> 2.19.0`
