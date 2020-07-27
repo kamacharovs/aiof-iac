@@ -159,6 +159,54 @@ resource "azurerm_postgresql_virtual_network_rule" "example" {
 
 
 /*
+ * App Service
+ */
+resource "azurerm_app_service_plan" "aiof_app_service_plan" {
+  name                = "aiof-${var.env}-service-plan"
+  location            = azurerm_resource_group.aiof_rg.location
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  kind                = "Linux"
+  reserved            = true
+
+  sku {
+    tier = "Basic"
+    size = "B1"
+  }
+
+  tags = {
+    env = var.env
+  }
+}
+
+resource "azurerm_app_service" "aiof_auth" {
+  name                = "aiof-auth-${var.env}"
+  location            = azurerm_resource_group.aiof_rg.location
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
+
+  site_config {
+    always_on                = false
+    linux_fx_version         = var.appservice_version
+
+    cors {
+      allowed_origins        = ["*"]
+    }
+  }
+
+  app_settings = {
+    "SOME_KEY" = "some-value"
+  }
+
+  connection_string {
+    name  = "Database"
+    type  = "SQLServer"
+    value = "Server=some-server.mydomain.com;Integrated Security=SSPI"
+  }
+}
+
+
+
+/*
  * Kubernetes
  */
 resource "azurerm_kubernetes_cluster" "aiof_aks" {

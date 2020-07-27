@@ -40,3 +40,8 @@ variable "kubernetes_version" {
   description = "Kubernetes version"
   default = "1.17"
 }
+
+variable "appservice_version" {
+  description = "The .NET Core version of App Services"
+  default = "DOTNETCORE|3.1"
+}
