@@ -56,3 +56,28 @@ variable "appservice_version" {
   description = "The .NET Core version of App Services"
   default     = "DOTNETCORE|3.1"
 }
+
+variable "appservice_auth_settings" {
+  type        = map
+  description = "Auth microservice application settings"
+  default     = {
+      "FeatureManagement:RefreshToken" = "false"
+      "Jwt:Expires"                    = "900"
+      "Jwt:RefreshExpires"             = "86400"
+      "Jwt:Type"                       = "Bearer"
+      "Jwt:Issuer"                     = "aiof:auth"
+      "Jwt:Audience"                   = "aiof:auth:audience"
+      "Hash:Iterations"                = "10000"
+      "Hash:SaltSize"                  = "16"
+      "Hash:KeySize"                   = "32"
+  }
+}
+variable "appsettings_auth_jwt_secret_key" {
+  type        = string
+  description = "Auth microservice application settings JWT secret key"
+  default     = "Jwt:Secret"
+}
+variable "appsettings_auth_jwt_secret_value" {
+  type  = string
+  description = "Auth microservice application settings JWT secret value"
+}
