@@ -78,6 +78,6 @@ variable "appsettings_auth_jwt_secret_key" {
   default     = "Jwt:Secret"
 }
 variable "appsettings_auth_jwt_secret_value" {
-  type  = string
+  type        = string
   description = "Auth microservice application settings JWT secret value"
 }
