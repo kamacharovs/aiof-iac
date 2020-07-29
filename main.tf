@@ -196,7 +196,8 @@ resource "azurerm_app_service" "aiof_auth" {
   app_settings = merge(
     var.appservice_auth_settings,
     {
-      "${var.appsettings_auth_jwt_secret_key}" = var.appsettings_auth_jwt_secret_value
+      "${var.appsettings_auth_jwt_secret_key}"            = var.appsettings_auth_jwt_secret_value
+      "${var.appsettings_connection_string_database_key}" = var.appsettings_connection_string_database_value
     }
   )
 

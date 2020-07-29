@@ -62,6 +62,7 @@ variable "appservice_auth_settings" {
   description = "Auth microservice application settings"
   default     = {
       "FeatureManagement:RefreshToken" = "false"
+      "FeatureManagement:OpenId"       = "true"
       "Jwt:Expires"                    = "900"
       "Jwt:RefreshExpires"             = "86400"
       "Jwt:Type"                       = "Bearer"
@@ -80,4 +81,13 @@ variable "appsettings_auth_jwt_secret_key" {
 variable "appsettings_auth_jwt_secret_value" {
   type        = string
   description = "Auth microservice application settings JWT secret value"
+}
+variable "appsettings_connection_string_database_key" {
+  type        = string
+  description = "Auth microservice application settings database connection string key"
+  default     = "ConnectionStrings:Database"
+}
+variable "appsettings_connection_string_database_value" {
+  type        = string
+  description = "Auth microservice application settings database connection string value"
 }
