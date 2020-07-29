@@ -85,7 +85,7 @@ variable "appsettings_auth_jwt_secret_value" {
 variable "appsettings_connection_string_database_key" {
   type        = string
   description = "Auth microservice application settings database connection string key"
-  default     = "ConnectionStrings:Database"
+  default     = "Database"
 }
 variable "appsettings_connection_string_database_value" {
   type        = string
