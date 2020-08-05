@@ -65,6 +65,14 @@ variable "kubernetes_version" {
   default     = "1.17"
 }
 
+
+variable "application_insights_application_type" {
+  type        = string
+  description = "Application Insights application type"
+  default     = "web"
+}
+
+
 variable "appservice_version" {
   type        = string
   description = "The .NET Core version of App Services"

@@ -115,7 +115,7 @@ resource "azurerm_container_registry" "aiof_cr" {
  * - PostgreSQL server
  * - PostgreSQL database
  * - Virtual network rule for DB Admin
- */
+ 
 resource "azurerm_postgresql_server" "aiof_postgres_server" {
   name                = "aiof-${var.env}"
   location            = azurerm_resource_group.aiof_rg.location
@@ -155,6 +155,18 @@ resource "azurerm_postgresql_firewall_rule" "aiof_dbadmin_rule" {
   server_name         = azurerm_postgresql_server.aiof_postgres_server.name
   start_ip_address    = var.db_admin_start_ip
   end_ip_address      = var.db_admin_start_ip
+}
+*/
+
+
+/*
+ * Application Insights
+ */
+resource "azurerm_application_insights" "heimdall" {
+  name                = "heimdall-${var.env}"
+  location            = azurerm_resource_group.aiof_rg.location
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  application_type    = var.application_insights_application_type
 }
 
 
