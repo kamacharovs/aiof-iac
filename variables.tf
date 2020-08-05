@@ -54,7 +54,7 @@ variable "kubernetes_version" {
 variable "appservice_version" {
   type        = string
   description = "The .NET Core version of App Services"
-  default     = "DOTNETCORE|3.1"
+  default     = "DOCKER|gkama/aiof-auth:latest"
 }
 
 variable "appservice_auth_settings" {
