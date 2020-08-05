@@ -200,10 +200,4 @@ resource "azurerm_app_service" "aiof_auth" {
       "${var.appsettings_auth_jwt_secret_key}"    = var.appsettings_auth_jwt_secret_value
     }
   )
-
-  connection_string {
-    name  = var.appsettings_connection_string_database_key
-    type  = "PostgreSQL"
-    value = var.appsettings_connection_string_database_value
-  }
 }
