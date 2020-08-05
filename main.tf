@@ -43,7 +43,7 @@ resource "azurerm_network_security_rule" "aiof_vnet_nsg_rule" {
   access                      = "Allow"
   protocol                    = "*"
   source_port_range           = "*"
-  destination_port_range      = "80,443,5432"
+  destination_port_range      = "5432"
   source_address_prefix       = var.db_admin_start_ip
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.aiof_rg.name
@@ -95,7 +95,7 @@ resource "azurerm_subnet" "aiof_aksnodes" {
 
 /*
  * Container Registry
- */
+
 resource "azurerm_container_registry" "aiof_cr" {
   name                     = "aiof${var.env}"
   resource_group_name      = azurerm_resource_group.aiof_rg.name
@@ -106,7 +106,7 @@ resource "azurerm_container_registry" "aiof_cr" {
   tags = {
     env = var.env
   }
-}
+} */
 
 
 
@@ -148,12 +148,13 @@ resource "azurerm_postgresql_database" "aiof_postgres_db" {
   collation           = "English_United States.1252"
 }
 
-resource "azurerm_postgresql_virtual_network_rule" "example" {
-  name                                 = "postgresql-vnet-rule"
-  resource_group_name                  = azurerm_resource_group.aiof_rg.name
-  server_name                          = azurerm_postgresql_server.aiof_postgres_server.name
-  subnet_id                            = azurerm_subnet.aiof_backends.id
-  ignore_missing_vnet_service_endpoint = true
+
+resource "azurerm_postgresql_firewall_rule" "aiof_dbadmin_rule" {
+  name                = "dbadmin"
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  server_name         = azurerm_postgresql_server.aiof_postgres_server.name
+  start_ip_address    = var.db_admin_start_ip
+  end_ip_address      = var.db_admin_start_ip
 }
 
 

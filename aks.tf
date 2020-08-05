@@ -1,6 +1,6 @@
 /*
  * Kubernetes
- */
+
 resource "azurerm_kubernetes_cluster" "aiof_aks" {
   name                = "aiof-${var.env}"
   location            = azurerm_resource_group.aiof_rg.location
@@ -30,4 +30,4 @@ resource "azurerm_kubernetes_cluster" "aiof_aks" {
   tags = {
     env = var.env
   }
-}
+} */

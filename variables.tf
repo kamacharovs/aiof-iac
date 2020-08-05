@@ -61,22 +61,22 @@ variable "appservice_auth_settings" {
   type        = map
   description = "Auth microservice application settings"
   default     = {
-      "FeatureManagement:RefreshToken" = "false"
-      "FeatureManagement:OpenId"       = "true"
-      "Jwt:Expires"                    = "900"
-      "Jwt:RefreshExpires"             = "86400"
-      "Jwt:Type"                       = "Bearer"
-      "Jwt:Issuer"                     = "aiof:auth"
-      "Jwt:Audience"                   = "aiof:auth:audience"
-      "Hash:Iterations"                = "10000"
-      "Hash:SaltSize"                  = "16"
-      "Hash:KeySize"                   = "32"
+      "FeatureManagement__RefreshToken" = "false"
+      "FeatureManagement__OpenId"       = "true"
+      "Jwt__Expires"                    = "900"
+      "Jwt__RefreshExpires"             = "86400"
+      "Jwt__Type"                       = "Bearer"
+      "Jwt__Issuer"                     = "aiof:auth"
+      "Jwt__Audience"                   = "aiof:auth:audience"
+      "Hash__Iterations"                = "10000"
+      "Hash__SaltSize"                  = "16"
+      "Hash__KeySize"                   = "32"
   }
 }
 variable "appsettings_auth_jwt_secret_key" {
   type        = string
   description = "Auth microservice application settings JWT secret key"
-  default     = "Jwt:Secret"
+  default     = "Jwt__Secret"
 }
 variable "appsettings_auth_jwt_secret_value" {
   type        = string
