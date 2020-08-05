@@ -30,6 +30,19 @@ variable "env" {
   default     = "dev"
 }
 
+
+variable "postgresql_sku_name" {
+  type        = string
+  description = "PostgreSQL Sku Name"
+  default     = "B_Gen5_2"
+}
+
+variable "postgresql_version" {
+  type        = string
+  description = "PostgreSQL version"
+  default     = "11"
+}
+
 variable "db_admin_username" {
   type        = string
   description = "Database admin username"
@@ -44,6 +57,7 @@ variable "db_admin_start_ip" {
   type        = string
   description = "Database admin IP address"
 }
+
 
 variable "kubernetes_version" {
   type        = string

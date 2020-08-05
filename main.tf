@@ -124,8 +124,8 @@ resource "azurerm_postgresql_server" "aiof_postgres_server" {
   administrator_login          = var.db_admin_username
   administrator_login_password = var.db_admin_password
 
-  sku_name   = "B_Gen5_2"
-  version    = "9.6"
+  sku_name   = var.postgresql_sku_name
+  version    = var.postgresql_version
   storage_mb = 5120
 
   backup_retention_days        = 7
