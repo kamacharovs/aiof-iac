@@ -22,7 +22,6 @@ resource "azurerm_resource_group" "aiof_rg" {
 /*
  * Networking
  * - Network security group with rule for IP of DB Admin
- * - DDOS protection plan
  * - Virtual network
  * - Subnet
  */
@@ -48,16 +47,6 @@ resource "azurerm_network_security_rule" "aiof_vnet_nsg_rule" {
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.aiof_rg.name
   network_security_group_name = azurerm_network_security_group.aiof_vnet_nsg.name
-}
-
-resource "azurerm_network_ddos_protection_plan" "aiof_ddos_pp" {
-  name                = "vnet-ddos-pp-${var.env}-${var.location}"
-  location            = azurerm_resource_group.aiof_rg.location
-  resource_group_name = azurerm_resource_group.aiof_rg.name
-
-  tags = {
-    env = var.env
-  }
 }
 
 resource "azurerm_virtual_network" "aiof_vnet" {
