@@ -83,17 +83,30 @@ variable "appservice_auth_settings" {
   type        = map
   description = "Auth microservice application settings"
   default     = {
-      "FeatureManagement__RefreshToken" = "false"
+      "FeatureManagement__RefreshToken" = "true"
       "FeatureManagement__OpenId"       = "true"
+      "FeatureManagement__MemCache"     = "true"
+      "MemCache__Ttl"                   = "900"
       "PostgreSQL"                      = ""
       "Jwt__Expires"                    = "900"
       "Jwt__RefreshExpires"             = "86400"
       "Jwt__Type"                       = "Bearer"
       "Jwt__Issuer"                     = "aiof:auth"
       "Jwt__Audience"                   = "aiof:auth:audience"
+      "Jwt__Algorithm__Default"         = "RS256"
+      "Jwt__Algorithm__User"            = "HS256"
+      "Jwt__Algorithm__Client"          = "RS256"
       "Hash__Iterations"                = "10000"
       "Hash__SaltSize"                  = "16"
       "Hash__KeySize"                   = "32"
+      "OpenApi__Version"                = "v1.0.0"
+      "OpenApi__Title"                  = "aiof.auth"
+      "OpenApi__Description"            = "Aiof authentication microservice"
+      "OpenApi__Contact__Name"          = "Georgi Kamacharov"
+      "OpenApi__Contact__Email"         = "gkamacharov@aiof.com"
+      "OpenApi__Contact__Url"           = "https://github.com/gkama"
+      "OpenApi__License__Name"          = "MIT"
+      "OpenApi__License__Url"           = "https://github.com/kamacharovs/aiof-auth/blob/master/LICENSE"
   }
 }
 variable "appsettings_auth_jwt_secret_key" {
