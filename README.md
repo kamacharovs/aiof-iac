@@ -29,11 +29,15 @@ environment = "dev"
 db_admin_username = ""
 db_admin_password = ""
 db_admin_start_ip = ""
+
+appsettings_auth_jwt_private_key_value  = ""
+appsettings_auth_jwt_public_key_value   = ""
 ```
 
 ### Resources
 
 Networking
+
 - Network security group
 - Network security group rules
 - DDOS protection plan
@@ -41,8 +45,10 @@ Networking
 - Subnet: backend
 
 Database
+
 - PostgreSQL server
 - PostgreSQL database
 
 Container registry
+
 - Azure Container Registry
