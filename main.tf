@@ -198,7 +198,6 @@ resource "azurerm_app_service" "aiof_auth" {
   app_settings = merge(
     var.appservice_auth_settings,
     {
-      "${var.appsettings_auth_jwt_secret_key}"    = var.appsettings_auth_jwt_secret_value
       "${var.appsettings_auth_jwt_private_key}"   = var.appsettings_auth_jwt_private_key_value
       "${var.appsettings_auth_jwt_public_key}"    = var.appsettings_auth_jwt_public_key_value
     }
