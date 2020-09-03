@@ -6,6 +6,18 @@ All in one finance infrastructure as code, specific to an environment (Dev, QA, 
 
 All documentation for this specific repository
 
+### Terraform reference
+
+- [azurerm_resource_group](https://www.terraform.io/docs/providers/azurerm/r/resource_group.html)
+- [azurerm_network_security_group](https://www.terraform.io/docs/providers/azurerm/r/network_security_group.html)
+- [azurerm_network_security_rule](https://www.terraform.io/docs/providers/azurerm/r/network_security_rule.html)
+- [azurerm_virtual_network](https://www.terraform.io/docs/providers/azurerm/r/virtual_network.html)
+- [azurerm_subnet](https://www.terraform.io/docs/providers/azurerm/r/subnet.html)
+- [azurerm_key_vault](https://www.terraform.io/docs/providers/azurerm/r/key_vault.html)
+- [azurerm_application_insights](https://www.terraform.io/docs/providers/azurerm/r/application_insights.html)
+- [azurerm_app_service_plan](https://www.terraform.io/docs/providers/azurerm/r/app_service_plan.html)
+- [azurerm_app_service](https://www.terraform.io/docs/providers/azurerm/r/app_service.html)
+
 ### GitHub Repositories
 
 - [jcorioland/tf-aks-kubenet](https://github.com/jcorioland/tf-aks-kubenet/blob/master/tf/aks.tf) - example of how Kubernetes is deployed to Azure
