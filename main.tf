@@ -82,6 +82,53 @@ resource "azurerm_subnet" "aiof_aksnodes" {
 
 
 
+data "azurerm_client_config" "current_rg" {}
+
+resource "azurerm_resource_group" "aiof_rg" {
+  name     = azurerm_resource_group.aiof_rg.name
+  location = azurerm_resource_group.aiof_rg.location
+}
+
+resource "azurerm_key_vault" "aiof_kv" {
+  name                        = "aiof-${var.env}-kv"
+  location                    = azurerm_resource_group.aiof_rg.location
+  resource_group_name         = azurerm_resource_group.aiof_rg.name
+  enabled_for_disk_encryption = false
+  tenant_id                   = data.azurerm_client_config.current_rg.tenant_id
+  soft_delete_enabled         = false
+  purge_protection_enabled    = false
+
+  sku_name = "standard"
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current_rg.tenant_id
+    object_id = data.azurerm_client_config.current_rg.object_id
+
+    key_permissions = [
+      "get",
+    ]
+
+    secret_permissions = [
+      "get",
+    ]
+
+    storage_permissions = [
+      "get",
+    ]
+  }
+
+  network_acls {
+    default_action = "Deny"
+    bypass         = "AzureServices"
+  }
+
+  tags = {
+    env = var.env
+  }
+}
+
+
+
 /*
  * Container Registry
 
