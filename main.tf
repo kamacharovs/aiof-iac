@@ -25,6 +25,7 @@ resource "azurerm_resource_group" "aiof_rg" {
  * - Virtual network
  * - Subnet
  */
+/*
 resource "azurerm_network_security_group" "aiof_vnet_nsg" {
   name                = "vnet-${var.env}-${var.location}-nsg"
   location            = azurerm_resource_group.aiof_rg.location
@@ -55,11 +56,6 @@ resource "azurerm_virtual_network" "aiof_vnet" {
   resource_group_name = azurerm_resource_group.aiof_rg.name
   address_space       = ["10.0.0.0/8"]
 
-  ddos_protection_plan {
-    id     = azurerm_network_ddos_protection_plan.aiof_ddos_pp.id
-    enable = true
-  }
-
   tags = {
     env = var.env
   }
@@ -79,16 +75,11 @@ resource "azurerm_subnet" "aiof_aksnodes" {
   virtual_network_name = azurerm_virtual_network.aiof_vnet.name
   address_prefixes     = ["10.240.0.0/16"]
 }
+*/
 
 
 
 data "azurerm_client_config" "current_rg" {}
-
-resource "azurerm_resource_group" "aiof_rg" {
-  name     = azurerm_resource_group.aiof_rg.name
-  location = azurerm_resource_group.aiof_rg.location
-}
-
 resource "azurerm_key_vault" "aiof_kv" {
   name                        = "aiof-${var.env}-kv"
   location                    = azurerm_resource_group.aiof_rg.location
