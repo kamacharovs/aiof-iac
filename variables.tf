@@ -96,7 +96,7 @@ variable "appservice_auth_settings" {
       "Hash__Iterations"                = "10000"
       "Hash__SaltSize"                  = "16"
       "Hash__KeySize"                   = "32"
-      "OpenApi__Version"                = "v1.0.0"
+      "OpenApi__Version"                = "v1.0.0-alpha"
       "OpenApi__Title"                  = "aiof.auth"
       "OpenApi__Description"            = "Aiof authentication microservice"
       "OpenApi__Contact__Name"          = "Georgi Kamacharov"
