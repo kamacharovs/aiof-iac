@@ -124,3 +124,22 @@ variable "appsettings_auth_jwt_public_key_value" {
   type        = string
   description = "Auth microservice application settings JWT public key value"
 }
+
+variable "kv_jwt_private_key" {
+  type        = string
+  description = "PEM private key, key vault key"
+  default     = "pem-private-key"
+}
+variable "kv_jwt_private_key_value" {
+  type        = string
+  description = "PEM private key, key vault value"
+}
+variable "kv_jwt_public_key" {
+  type        = string
+  description = "PEM public key, key vault key"
+  default     = "pem-public-key"
+}
+variable "kv_jwt_public_key_value" {
+  type        = string
+  description = "PEM public key, key vault value"
+}
