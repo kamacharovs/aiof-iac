@@ -117,18 +117,18 @@ resource "azurerm_key_vault" "aiof_kv" {
     env = var.env
   }
 }
-resource "azurerm_key_vault_secret" "pem_private_key" {
+resource "azurerm_key_vault_secret" "kv_jwt_private_key" {
   name         = var.kv_jwt_private_key
-  value        = var.kv_jwt_private_key_value
+  value        = var.appsettings_auth_jwt_private_key_value
   key_vault_id = azurerm_key_vault.aiof_kv.id
 
   tags = {
     env = var.env
   }
 }
-resource "azurerm_key_vault_secret" "pem_public_key" {
+resource "azurerm_key_vault_secret" "kv_jwt_public_key" {
   name         = var.kv_jwt_public_key
-  value        = var.kv_jwt_public_key_value
+  value        = var.appsettings_auth_jwt_public_key_value
   key_vault_id = azurerm_key_vault.aiof_kv.id
 
   tags = {
