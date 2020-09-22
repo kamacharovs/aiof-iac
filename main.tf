@@ -101,6 +101,8 @@ resource "azurerm_key_vault" "aiof_kv" {
 
     secret_permissions = [
       "get",
+      "set",
+      "delete",
     ]
 
     storage_permissions = [
@@ -108,8 +110,31 @@ resource "azurerm_key_vault" "aiof_kv" {
     ]
   }
 
+  access_policy {
+    tenant_id = data.azurerm_client_config.current_rg.tenant_id
+    object_id = var.gkama_object_id
+
+    key_permissions = [
+      "list",
+      "get",
+      "create",
+      "delete",
+    ]
+
+    secret_permissions = [
+      "list",
+      "get",
+      "set",
+      "delete",
+    ]
+
+    storage_permissions = [
+      "set",
+    ]
+  }
+
   network_acls {
-    default_action = "Deny"
+    default_action = "Allow"
     bypass         = "AzureServices"
   }
 

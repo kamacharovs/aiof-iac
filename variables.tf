@@ -58,6 +58,11 @@ variable "db_admin_start_ip" {
   description = "Database admin IP address"
 }
 
+variable "gkama_object_id" {
+  type        = string
+  description = "gkama's object id"
+}
+
 
 variable "kubernetes_version" {
   type        = string
