@@ -268,7 +268,7 @@ resource "azurerm_app_service" "aiof_auth" {
 
   site_config {
     always_on                = false
-    linux_fx_version         = var.appservice_version
+    linux_fx_version         = var.appservice_auth_version
 
     cors {
       allowed_origins        = ["*"]
@@ -283,3 +283,24 @@ resource "azurerm_app_service" "aiof_auth" {
     }
   )
 }
+
+resource "azurerm_app_service" "aiof_metadata" {
+  name                = "aiof-metadata-${var.env}"
+  location            = azurerm_resource_group.aiof_rg.location
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
+
+  site_config {
+    always_on                = false
+    linux_fx_version         = var.appservice_metadata_version
+
+    cors {
+      allowed_origins        = ["*"]
+    }
+  }
+
+  app_settings = {
+
+  }
+}
+

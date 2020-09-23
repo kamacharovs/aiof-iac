@@ -78,10 +78,16 @@ variable "application_insights_application_type" {
 }
 
 
-variable "appservice_version" {
+variable "appservice_auth_version" {
   type        = string
   description = "The .NET Core version of App Services"
   default     = "DOCKER|gkama/aiof-auth:latest"
+}
+
+variable "appservice_metadata_version" {
+  type        = string
+  description = "The Docker image version of App Services"
+  default     = "DOCKER|gkama/aiof-metadata:latest"
 }
 
 variable "appservice_auth_settings" {
