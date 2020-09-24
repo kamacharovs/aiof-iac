@@ -300,7 +300,7 @@ resource "azurerm_app_service" "aiof_metadata" {
   }
 
   app_settings = {
-
+    "WEBSITES_PORT" = "80"
   }
 }
 
