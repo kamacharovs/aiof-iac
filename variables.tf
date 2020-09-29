@@ -90,6 +90,12 @@ variable "appservice_metadata_version" {
   default     = "DOCKER|gkama/aiof-metadata:latest"
 }
 
+variable "appservice_portal_version" {
+  type        = string
+  description = "The Docker image version of App Services"
+  default     = "DOCKER|gkama/aiof-portal:latest"
+}
+
 variable "appservice_auth_settings" {
   type        = map
   description = "Auth microservice application settings"

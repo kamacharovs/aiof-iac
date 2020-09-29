@@ -260,6 +260,30 @@ resource "azurerm_app_service_plan" "aiof_app_service_plan" {
   }
 }
 
+resource "azurerm_app_service" "aiof_portal" {
+  name                = "aiof-portal-${var.env}"
+  location            = azurerm_resource_group.aiof_rg.location
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
+
+  site_config {
+    always_on                = false
+    linux_fx_version         = var.appservice_portal_version
+
+    cors {
+      allowed_origins        = ["*"]
+    }
+  }
+
+  app_settings = {
+    "WEBSITES_PORT" = "80"
+  }
+
+  tags = {
+    env = var.env
+  }
+}
+
 resource "azurerm_app_service" "aiof_auth" {
   name                = "aiof-auth-${var.env}"
   location            = azurerm_resource_group.aiof_rg.location
@@ -282,6 +306,10 @@ resource "azurerm_app_service" "aiof_auth" {
       "${var.appsettings_auth_jwt_public_key}"    = var.appsettings_auth_jwt_public_key_value
     }
   )
+
+  tags = {
+    env = var.env
+  }
 }
 
 resource "azurerm_app_service" "aiof_metadata" {
@@ -301,6 +329,10 @@ resource "azurerm_app_service" "aiof_metadata" {
 
   app_settings = {
     "WEBSITES_PORT" = "80"
+  }
+
+  tags = {
+    env = var.env
   }
 }
 
