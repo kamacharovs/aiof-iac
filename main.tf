@@ -328,9 +328,9 @@ resource "azurerm_app_service" "aiof_portal" {
 
   app_settings = {
     "WEBSITES_PORT"                 = "80"
-    "REACT_APP_API_ROOT"            = "http://localhost:5001"
-    "REACT_APP_API_AUTH_ROOT"       = "https://${azurerm_app_service.aiof_auth.default_site_hostname}"
-    "REACT_APP_API_METADATA_ROOT"   = "https://${azurerm_app_service.aiof_metadata.default_site_hostname}/api"
+    #"REACT_APP_API_ROOT"            = "http://localhost:5001"
+    #"REACT_APP_API_AUTH_ROOT"       = "https://${azurerm_app_service.aiof_auth.default_site_hostname}"
+    #"REACT_APP_API_METADATA_ROOT"   = "https://${azurerm_app_service.aiof_metadata.default_site_hostname}/api"
   }
 
   tags = {
