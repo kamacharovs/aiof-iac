@@ -278,7 +278,34 @@ resource "azurerm_app_service" "aiof_auth" {
   app_settings = merge(
     var.appservice_auth_settings,
     {
-      "${var.appsettings_auth_jwt_private_key}"   = var.appsettings_auth_jwt_private_key_value
+      "${var.appsettings_auth_jwt_private_key}"       = var.appsettings_auth_jwt_private_key_value
+      "${var.appsettings_auth_jwt_public_key}"        = var.appsettings_auth_jwt_public_key_value
+    }
+  )
+
+  tags = {
+    env = var.env
+  }
+}
+
+resource "azurerm_app_service" "aiof_api" {
+  name                = "aiof-api-${var.env}"
+  location            = azurerm_resource_group.aiof_rg.location
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
+
+  site_config {
+    always_on                = false
+    linux_fx_version         = var.appservice_api_version
+
+    cors {
+      allowed_origins        = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}"]
+    }
+  }
+
+  app_settings = merge(
+    var.appservice_api_settings,
+    {
       "${var.appsettings_auth_jwt_public_key}"    = var.appsettings_auth_jwt_public_key_value
     }
   )

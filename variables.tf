@@ -84,6 +84,12 @@ variable "appservice_auth_version" {
   default     = "DOCKER|gkama/aiof-auth:latest"
 }
 
+variable "appservice_api_version" {
+  type        = string
+  description = "The .NET Core version of App Services"
+  default     = "DOCKER|gkama/aiof-api:latest"
+}
+
 variable "appservice_metadata_version" {
   type        = string
   description = "The Docker image version of App Services"
@@ -140,6 +146,33 @@ variable "appsettings_auth_jwt_public_key" {
 variable "appsettings_auth_jwt_public_key_value" {
   type        = string
   description = "Auth microservice application settings JWT public key value"
+}
+
+variable "appservice_api_settings" {
+  type        = map
+  description = "API microservice application settings"
+  default     = {
+      "FeatureManagement__Asset"        = "true"
+      "FeatureManagement__Goal"         = "true"
+      "FeatureManagement__Liability"    = "true"
+      "PostgreSQL"                      = ""
+      "Polly__DefaultRetry"             = "2"
+      "Metadata__BaseUrl"               = ""
+      "Metadata__DefaultFrequency"      = "monthly"
+      "Jwt__Issuer"                     = "aiof:auth"
+      "Jwt__Audience"                   = "aiof:auth:audience"
+      "Hash__Iterations"                = "10000"
+      "Hash__SaltSize"                  = "16"
+      "Hash__KeySize"                   = "32"
+      "OpenApi__Version"                = "v1.0.0-alpha"
+      "OpenApi__Title"                  = "aiof.api"
+      "OpenApi__Description"            = "Aiof main api microservice"
+      "OpenApi__Contact__Name"          = "Georgi Kamacharov"
+      "OpenApi__Contact__Email"         = "gkamacharov@aiof.com"
+      "OpenApi__Contact__Url"           = "https://github.com/gkama"
+      "OpenApi__License__Name"          = "MIT"
+      "OpenApi__License__Url"           = "https://github.com/kamacharovs/aiof-api/blob/master/LICENSE"
+  }
 }
 
 variable "kv_jwt_private_key" {
