@@ -185,3 +185,9 @@ variable "kv_jwt_public_key" {
   description = "PEM public key, key vault key"
   default     = "JwtPublicKey"
 }
+
+variable "cors_github_io" {
+  type        = string
+  description = "github.io for cors"
+  default     = "https://kamacharovs.github.io/"
+}

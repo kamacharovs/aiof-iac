@@ -271,7 +271,7 @@ resource "azurerm_app_service" "aiof_auth" {
     linux_fx_version         = var.appservice_auth_version
 
     cors {
-      allowed_origins        = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}"]
+      allowed_origins        = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]
     }
   }
 
@@ -299,7 +299,7 @@ resource "azurerm_app_service" "aiof_api" {
     linux_fx_version         = var.appservice_api_version
 
     cors {
-      allowed_origins        = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}"]
+      allowed_origins        = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]
     }
   }
 
@@ -326,7 +326,7 @@ resource "azurerm_app_service" "aiof_metadata" {
     linux_fx_version         = var.appservice_metadata_version
 
     cors {
-      allowed_origins        = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}"]
+      allowed_origins        = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]
     }
   }
 
