@@ -276,6 +276,25 @@ resource "azurerm_application_insights_web_test" "heimdall-aiof-api-health" {
 </WebTest>
 XML
 }
+resource "azurerm_application_insights_web_test" "heimdall-aiof-metadata-health" {
+  name                    = "aiof-metadata-health"
+  location                = azurerm_resource_group.aiof_rg.location
+  resource_group_name     = azurerm_resource_group.aiof_rg.name
+  application_insights_id = azurerm_application_insights.heimdall.id
+  kind                    = "ping"
+  frequency               = 300
+  timeout                 = 120
+  enabled                 = true
+  geo_locations           = ["us-ca-sjc-azr", "us-tx-sn1-azr", "us-il-ch1-azr", "us-va-ash-azr", "us-fl-mia-edge"]
+
+  configuration = <<XML
+<WebTest Name="aiof-metadata-health" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
+  <Items>
+    <Request Method="GET" Version="1.1" Url="https://${azurerm_app_service.aiof_metadata.default_site_hostname}/health" ThinkTime="0" Timeout="120" ParseDependentRequests="False" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False"/>
+  </Items>
+</WebTest>
+XML
+}
 
 
 /*
