@@ -189,5 +189,5 @@ variable "kv_jwt_public_key" {
 variable "cors_github_io" {
   type        = string
   description = "github.io for cors"
-  default     = "https://kamacharovs.github.io/"
+  default     = "https://kamacharovs.github.io"
 }
