@@ -1,4 +1,4 @@
 output "output_var" {
   description = "An output variable"
-  value       = ""
+  value       = "this is a test"
 }
