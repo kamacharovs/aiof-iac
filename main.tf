@@ -278,6 +278,7 @@ resource "azurerm_app_service" "aiof_auth" {
   app_settings = merge(
     var.appservice_auth_settings,
     {
+      "ApplicationInsights__InstrumentationKey"       = azurerm_application_insights.heimdall.instrumentation_key
       "${var.appsettings_auth_jwt_private_key}"       = var.appsettings_auth_jwt_private_key_value
       "${var.appsettings_auth_jwt_public_key}"        = var.appsettings_auth_jwt_public_key_value
     }
@@ -306,6 +307,7 @@ resource "azurerm_app_service" "aiof_api" {
   app_settings = merge(
     var.appservice_api_settings,
     {
+      "ApplicationInsights__InstrumentationKey"   = azurerm_application_insights.heimdall.instrumentation_key
       "${var.appsettings_auth_jwt_public_key}"    = var.appsettings_auth_jwt_public_key_value
     }
   )
@@ -331,7 +333,7 @@ resource "azurerm_app_service" "aiof_metadata" {
   }
 
   app_settings = {
-    "WEBSITES_PORT" = "80"
+    "WEBSITES_PORT"                                 = "80"
   }
 
   tags = {
@@ -350,7 +352,7 @@ resource "azurerm_app_service" "aiof_portal" {
   }
 
   app_settings = {
-    "WEBSITES_PORT"                 = "80"
+    "WEBSITES_PORT"                                 = "80"
     #"REACT_APP_API_ROOT"            = "http://localhost:5001"
     #"REACT_APP_API_AUTH_ROOT"       = "https://${azurerm_app_service.aiof_auth.default_site_hostname}"
     #"REACT_APP_API_METADATA_ROOT"   = "https://${azurerm_app_service.aiof_metadata.default_site_hostname}/api"
