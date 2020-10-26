@@ -155,6 +155,7 @@ variable "appservice_api_settings" {
       "FeatureManagement__Asset"        = "true"
       "FeatureManagement__Goal"         = "true"
       "FeatureManagement__Liability"    = "true"
+      "FeatureManagement__Account"      = "false"
       "PostgreSQL"                      = ""
       "Polly__DefaultRetry"             = "2"
       "Metadata__BaseUrl"               = ""
