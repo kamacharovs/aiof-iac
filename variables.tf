@@ -110,7 +110,7 @@ variable "appservice_auth_settings" {
       "FeatureManagement__OpenId"       = "true"
       "FeatureManagement__MemCache"     = "true"
       "MemCache__Ttl"                   = "900"
-      "PostgreSQL"                      = ""
+      "Data__PostgreSQL"                = ""
       "Jwt__Expires"                    = "900"
       "Jwt__RefreshExpires"             = "604800"
       "Jwt__Type"                       = "Bearer"
