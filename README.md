@@ -22,8 +22,11 @@ All documentation for this specific repository
 
 - [jcorioland/tf-aks-kubenet](https://github.com/jcorioland/tf-aks-kubenet/blob/master/tf/aks.tf) - example of how Kubernetes is deployed to Azure
 
-### Other
+### Terraform
 
+- [Upgrading to Terraform v0.14](https://www.terraform.io/upgrade-guides/0-14.html)
+- [Upgrading to Terraform v0.13](https://www.terraform.io/upgrade-guides/0-13.html)
+- [Upgrade Guides](https://www.terraform.io/upgrade-guides/index.html)
 - [Older versions of Terraform](https://releases.hashicorp.com/terraform/)
 
 ### Versioning
