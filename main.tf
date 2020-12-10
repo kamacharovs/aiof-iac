@@ -8,18 +8,18 @@ terraform {
 }
 
 provider "azurerm" {
- subscription_id  = var.subscription_id
- tenant_id        = var.tenant_id
- client_id        = var.client_id
- client_secret    = var.client_secret
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
 
- features {}
+  features {}
 }
 
 resource "azurerm_resource_group" "aiof_rg" {
   name     = "aiof-${var.env}"
   location = var.location
-  
+
   tags = {
     env = var.env
   }
@@ -331,11 +331,11 @@ resource "azurerm_app_service" "aiof_auth" {
   app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
 
   site_config {
-    always_on                = false
-    linux_fx_version         = var.appservice_auth_version
+    always_on        = false
+    linux_fx_version = var.appservice_auth_version
 
     cors {
-      allowed_origins        = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]
+      allowed_origins = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]
     }
   }
 
@@ -360,11 +360,11 @@ resource "azurerm_app_service" "aiof_api" {
   app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
 
   site_config {
-    always_on                = false
-    linux_fx_version         = var.appservice_api_version
+    always_on        = false
+    linux_fx_version = var.appservice_api_version
 
     cors {
-      allowed_origins        = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]
+      allowed_origins = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]
     }
   }
 
@@ -388,16 +388,16 @@ resource "azurerm_app_service" "aiof_metadata" {
   app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
 
   site_config {
-    always_on                = false
-    linux_fx_version         = var.appservice_metadata_version
+    always_on        = false
+    linux_fx_version = var.appservice_metadata_version
 
     cors {
-      allowed_origins        = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]
+      allowed_origins = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]
     }
   }
 
   app_settings = {
-    "WEBSITES_PORT"                                 = "80"
+    "WEBSITES_PORT" = "80"
   }
 
   tags = {
@@ -411,12 +411,12 @@ resource "azurerm_app_service" "aiof_portal" {
   app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
 
   site_config {
-    always_on                = false
-    linux_fx_version         = var.appservice_portal_version
+    always_on        = false
+    linux_fx_version = var.appservice_portal_version
   }
 
   app_settings = {
-    "WEBSITES_PORT"                                 = "80"
+    "WEBSITES_PORT" = "80"
     #"REACT_APP_API_ROOT"            = "http://localhost:5001"
     #"REACT_APP_API_AUTH_ROOT"       = "https://${azurerm_app_service.aiof_auth.default_site_hostname}"
     #"REACT_APP_API_METADATA_ROOT"   = "https://${azurerm_app_service.aiof_metadata.default_site_hostname}/api"
