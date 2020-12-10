@@ -22,9 +22,13 @@ All documentation for this specific repository
 
 - [jcorioland/tf-aks-kubenet](https://github.com/jcorioland/tf-aks-kubenet/blob/master/tf/aks.tf) - example of how Kubernetes is deployed to Azure
 
+### Other
+
+- [Older versions of Terraform](https://releases.hashicorp.com/terraform/)
+
 ### Versioning
 
-Terraform undergoes a lot of versioning and new updates. In order to keep this updated, we can look at the latest release on their [GitHub](https://github.com/terraform-providers/terraform-provider-azurerm). The current version used is `~> 2.19.0`
+Terraform undergoes a lot of versioning and new updates. In order to keep this updated, we can look at the latest release on their [GitHub](https://github.com/terraform-providers/terraform-provider-azurerm). The current version used is `~> 2.39.0`
 
 ### Variables
 
