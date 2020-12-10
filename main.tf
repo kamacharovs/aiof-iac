@@ -1,10 +1,17 @@
-provider "azurerm" {
- version = "~> 2.19.0"
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 2.39.0"
+    }
+  }
+}
 
- subscription_id = var.subscription_id
- tenant_id = var.tenant_id
- client_id = var.client_id
- client_secret = var.client_secret
+provider "azurerm" {
+ subscription_id  = var.subscription_id
+ tenant_id        = var.tenant_id
+ client_id        = var.client_id
+ client_secret    = var.client_secret
 
  features {}
 }
@@ -335,9 +342,9 @@ resource "azurerm_app_service" "aiof_auth" {
   app_settings = merge(
     var.appservice_auth_settings,
     {
-      "ApplicationInsights__InstrumentationKey"       = azurerm_application_insights.heimdall.instrumentation_key
-      "${var.appsettings_auth_jwt_private_key}"       = var.appsettings_auth_jwt_private_key_value
-      "${var.appsettings_auth_jwt_public_key}"        = var.appsettings_auth_jwt_public_key_value
+      "ApplicationInsights__InstrumentationKey" = azurerm_application_insights.heimdall.instrumentation_key
+      "Jwt__PrivateKey"                         = var.appsettings_auth_jwt_private_key_value
+      "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
     }
   )
 
@@ -364,8 +371,8 @@ resource "azurerm_app_service" "aiof_api" {
   app_settings = merge(
     var.appservice_api_settings,
     {
-      "ApplicationInsights__InstrumentationKey"   = azurerm_application_insights.heimdall.instrumentation_key
-      "${var.appsettings_auth_jwt_public_key}"    = var.appsettings_auth_jwt_public_key_value
+      "ApplicationInsights__InstrumentationKey" = azurerm_application_insights.heimdall.instrumentation_key
+      "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
     }
   )
 

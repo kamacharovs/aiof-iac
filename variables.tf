@@ -129,19 +129,9 @@ variable "appservice_auth_settings" {
       "OpenApi__License__Url"           = "https://github.com/kamacharovs/aiof-auth/blob/master/LICENSE"
   }
 }
-variable "appsettings_auth_jwt_private_key" {
-  type        = string
-  description = "Auth microservice application settings JWT private key"
-  default     = "Jwt__PrivateKey"
-}
 variable "appsettings_auth_jwt_private_key_value" {
   type        = string
   description = "Auth microservice application settings JWT private key value"
-}
-variable "appsettings_auth_jwt_public_key" {
-  type        = string
-  description = "Auth microservice application settings JWT public key"
-  default     = "Jwt__PublicKey"
 }
 variable "appsettings_auth_jwt_public_key_value" {
   type        = string
