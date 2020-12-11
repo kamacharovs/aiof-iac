@@ -1,0 +1,23 @@
+trigger:
+- master
+
+resources:
+- repo: self
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: CopyFiles@2
+  displayName: copy files
+  inputs:
+    sourceFolder: $(agent.builddirectory)
+    contents: '**'
+    targetFolder: $(build.artifactstagingdirectory)
+
+- task: PublishBuildArtifacts@1
+  displayName: publish
+  inputs:
+    pathtoPublish: $(build.artifactstagingdirectory)
+    artifactName: iac
+    publishLocation: Container
