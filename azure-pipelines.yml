@@ -21,3 +21,9 @@ steps:
     pathtoPublish: $(build.artifactstagingdirectory)
     artifactName: iac
     publishLocation: Container
+
+- task: Bash@3
+  displayName: list files
+  inputs:
+    targetType: inline
+    script: ls
