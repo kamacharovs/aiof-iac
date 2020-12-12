@@ -2,6 +2,8 @@
 
 All in one finance infrastructure as code, specific to an environment (Dev, QA, Stage, Prod, etc.)
 
+[![Build Status](https://dev.azure.com/gkamacharov/gkama-cicd/_apis/build/status/kamacharovs.aiof-iac?branchName=master)](https://dev.azure.com/gkamacharov/gkama-cicd/_build/latest?definitionId=24&branchName=master)
+
 ## Documentation
 
 All documentation for this specific repository
