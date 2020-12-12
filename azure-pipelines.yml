@@ -19,7 +19,7 @@ steps:
   displayName: copy files
   inputs:
     sourceFolder: $(agent.builddirectory)
-    contents: '**'
+    contents: '*.tf'
     targetFolder: $(build.artifactstagingdirectory)
 
 - task: PublishBuildArtifacts@1
