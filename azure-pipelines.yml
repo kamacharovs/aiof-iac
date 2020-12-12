@@ -8,6 +8,13 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: TerraformTaskV1@0
+  displayName: terraform validate
+  inputs:
+    provider: azurerm
+    command: validate
+    workingDirectory: $(agent.builddirectory)
+
 - task: CopyFiles@2
   displayName: copy files
   inputs:
@@ -27,3 +34,4 @@ steps:
   inputs:
     targetType: inline
     script: ls
+
