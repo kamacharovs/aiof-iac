@@ -22,6 +22,7 @@ resource "azurerm_resource_group" "aiof_rg" {
 
   tags = {
     env = var.env
+    app = "aiof"
   }
 }
 
