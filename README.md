@@ -4,6 +4,20 @@ All in one finance infrastructure as code, specific to an environment (Dev, QA, 
 
 [![Build Status](https://dev.azure.com/gkamacharov/gkama-cicd/_apis/build/status/kamacharovs.aiof-iac?branchName=master)](https://dev.azure.com/gkamacharov/gkama-cicd/_build/latest?definitionId=24&branchName=master)
 
+## How to run it
+
+Below are instructions on how to run the `aiof-iac` terraform scripts
+
+### Local
+
+In order to run it locally, there must be an existing environment variable name `TF_VAR_storage_account_access_key`. This is an access key and it references the remote storage of the `terraform.tfstate` files. This state file exists per environment. The approach is used to keep it out of source control as it's a secret and used to access the storage account. Additionally, you pass in the `terraform.tfstate` that you want to look at. For example, for `dev`, you would point to `tf/dev/terraform.tfstate` as the `key`
+
+```ps
+terraform init -backend-config="key=tf/dev/terraform.tfstate" -backend-config="access_key=$env:TF_VAR_storage_account_access_key"
+```
+
+After the `terraform init` command runs successfully, then you can proceed with running `terraform plan` and subsequently `terraform apply` (if needed)
+
 ## Documentation
 
 All documentation for this specific repository
