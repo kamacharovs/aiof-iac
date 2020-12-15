@@ -30,6 +30,11 @@ variable "env" {
   default     = "dev"
 }
 
+variable "storage_account_key" {
+  type        = string
+  description = "Azure terraform.state storage account key"
+}
+
 
 variable "postgresql_sku_name" {
   type        = string
