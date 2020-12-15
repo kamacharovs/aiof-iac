@@ -30,9 +30,10 @@ variable "env" {
   default     = "dev"
 }
 
-variable "storage_account_key" {
+variable "app" {
   type        = string
-  description = "Azure terraform.state storage account key"
+  description = "Application name"
+  default     = "aiof"
 }
 
 

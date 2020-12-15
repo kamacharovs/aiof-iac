@@ -16,13 +16,14 @@ provider "azurerm" {
   features {}
 }
 
+
 resource "azurerm_resource_group" "aiof_rg" {
   name     = "aiof-${var.env}"
   location = var.location
 
   tags = {
     env = var.env
-    app = "aiof"
+    app = var.app
   }
 }
 
