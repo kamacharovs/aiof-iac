@@ -15,10 +15,15 @@ In order to run it locally, there must be an existing environment variable name 
 Additionally, you pass in the `terraform.tfstate` that you want to look at. For example, for `dev`, you would point to `tf/dev/terraform.tfstate` as the `key`. The storage key above will stay the same, but the environment specific state file will be changed/referenced here at runtime
 
 ```ps
-terraform init -backend-config="key=tf/dev/terraform.tfstate" -backend-config="access_key=$env:TF_VAR_storage_account_access_key"
+terraform init -lock -backend-config="key=tf/dev/terraform.tfstate" -backend-config="access_key=$env:TF_VAR_storage_account_access_key"
 ```
 
 After the `terraform init` command runs successfully, then you can proceed with running `terraform plan` and subsequently `terraform apply` (if needed)
+
+```ps
+terraform init -lock -backend-config="key=tf/dev/terraform.tfstate" -backend-config="access_key=$env:TF_VAR_storage_account_access_key"
+terraform plan -lock=false
+```
 
 ## Documentation
 
