@@ -171,9 +171,6 @@ resource "azurerm_key_vault_secret" "kv_jwt_public_key" {
 }
 
 
-/*
- * Container Registry
-
 resource "azurerm_container_registry" "aiof_cr" {
   name                     = "aiof${var.env}"
   resource_group_name      = azurerm_resource_group.aiof_rg.name
@@ -183,9 +180,9 @@ resource "azurerm_container_registry" "aiof_cr" {
 
   tags = {
     env = var.env
+    app = var.app
   }
-} */
-
+}
 
 
 /*
@@ -193,7 +190,7 @@ resource "azurerm_container_registry" "aiof_cr" {
  * - PostgreSQL server
  * - PostgreSQL database
  * - Virtual network rule for DB Admin
- 
+
 resource "azurerm_postgresql_server" "aiof_postgres_server" {
   name                = "aiof-${var.env}"
   location            = azurerm_resource_group.aiof_rg.location
@@ -215,11 +212,12 @@ resource "azurerm_postgresql_server" "aiof_postgres_server" {
 
   tags = {
     env = var.env
+    app = var.app
   }
 }
 
 resource "azurerm_postgresql_database" "aiof_postgres_db" {
-  name                = "AIOF"
+  name                = var.app
   resource_group_name = azurerm_resource_group.aiof_rg.name
   server_name         = azurerm_postgresql_server.aiof_postgres_server.name
   charset             = "UTF8"
