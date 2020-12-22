@@ -40,6 +40,7 @@ All documentation for this specific repository
 - [azurerm_application_insights](https://www.terraform.io/docs/providers/azurerm/r/application_insights.html)
 - [azurerm_app_service_plan](https://www.terraform.io/docs/providers/azurerm/r/app_service_plan.html)
 - [azurerm_app_service](https://www.terraform.io/docs/providers/azurerm/r/app_service.html)
+- [azurerm_container_registry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry)
 
 ### GitHub Repositories
 
