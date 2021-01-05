@@ -348,6 +348,12 @@ resource "azurerm_app_service" "aiof_auth" {
     }
   )
 
+  connection_string {
+    name  = "PostgreSQL"
+    type  = "PostgreSQL"
+    value = ""
+  }
+
   tags = {
     env = var.env
   }
@@ -375,6 +381,12 @@ resource "azurerm_app_service" "aiof_api" {
       "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
     }
   )
+
+  connection_string {
+    name  = "PostgreSQL"
+    type  = "PostgreSQL"
+    value = ""
+  }
 
   tags = {
     env = var.env
