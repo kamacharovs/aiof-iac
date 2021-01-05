@@ -349,8 +349,8 @@ resource "azurerm_app_service" "aiof_auth" {
   )
 
   connection_string {
-    name  = "PostgreSQL"
-    type  = "PostgreSQL"
+    name  = var.postgresql_constring_name
+    type  = var.postgresql_constring_type
     value = ""
   }
 
@@ -383,8 +383,8 @@ resource "azurerm_app_service" "aiof_api" {
   )
 
   connection_string {
-    name  = "PostgreSQL"
-    type  = "PostgreSQL"
+    name  = var.postgresql_constring_name
+    type  = var.postgresql_constring_type
     value = ""
   }
 

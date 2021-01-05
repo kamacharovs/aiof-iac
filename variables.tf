@@ -49,6 +49,17 @@ variable "postgresql_version" {
   default     = "11"
 }
 
+variable "postgresql_constring_name" {
+  type        = string
+  description = "PostgreSQL connection string name"
+  default     = "PostgreSQLConnection"
+}
+variable "postgresql_constring_type" {
+  type        = string
+  description = "PostgreSQL connection string type"
+  default     = "PostgreSQL"
+}
+
 variable "db_admin_username" {
   type        = string
   description = "Database admin username"
