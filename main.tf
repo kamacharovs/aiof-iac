@@ -324,7 +324,7 @@ resource "azurerm_app_service_plan" "aiof_app_service_plan" {
   }
 }
 
-resource "azurerm_app_service" "aiof_data" {
+/*resource "azurerm_app_service" "aiof_data" {
   name                = "aiof-data-${var.env}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
@@ -342,7 +342,7 @@ resource "azurerm_app_service" "aiof_data" {
   tags = {
     env = var.env
   }
-}
+}*/
 
 resource "azurerm_app_service" "aiof_auth" {
   name                = "aiof-auth-${var.env}"
