@@ -190,7 +190,7 @@ resource "azurerm_container_registry" "aiof_cr" {
  * - PostgreSQL server
  * - PostgreSQL database
  * - Virtual network rule for DB Admin
-
+*/
 resource "azurerm_postgresql_server" "aiof_postgres_server" {
   name                = "aiof-${var.env}"
   location            = azurerm_resource_group.aiof_rg.location
@@ -212,12 +212,11 @@ resource "azurerm_postgresql_server" "aiof_postgres_server" {
 
   tags = {
     env = var.env
-    app = var.app
   }
 }
 
 resource "azurerm_postgresql_database" "aiof_postgres_db" {
-  name                = var.app
+  name                = "aiof"
   resource_group_name = azurerm_resource_group.aiof_rg.name
   server_name         = azurerm_postgresql_server.aiof_postgres_server.name
   charset             = "UTF8"
@@ -232,7 +231,6 @@ resource "azurerm_postgresql_firewall_rule" "aiof_dbadmin_rule" {
   start_ip_address    = var.db_admin_start_ip
   end_ip_address      = var.db_admin_start_ip
 }
-*/
 
 
 /*
