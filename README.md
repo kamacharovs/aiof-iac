@@ -29,6 +29,14 @@ terraform plan -lock=false
 
 All documentation for this specific repository
 
+### Import
+
+[Import](https://www.terraform.io/docs/import/index.html) is used to import existing infrastructure into the terraform state. More information on the command itself can be found [here](https://www.terraform.io/docs/commands/import.html)
+
+```ps
+terraform import -lock=false <Terraform Resource>.<Terraform Alias> <Azure Resource Id>
+```
+
 ### Terraform reference
 
 - [azurerm_resource_group](https://www.terraform.io/docs/providers/azurerm/r/resource_group.html)
