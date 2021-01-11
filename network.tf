@@ -40,7 +40,7 @@ resource "azurerm_subnet" "aksnodes" {
   name                 = "aksnodes"
   resource_group_name  = azurerm_resource_group.aiof_rg.name
   virtual_network_name = azurerm_virtual_network.aiof_vnet.name
-  address_prefixes     = ["10.240.0.0/16"]
+  address_prefixes     = ["10.2.2.0/24"]
 }
 /*
 resource "azurerm_network_security_group" "aiof_vnet_nsg" {
