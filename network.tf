@@ -44,7 +44,7 @@ resource "azurerm_subnet" "aksnodes" {
 }
 /*
 resource "azurerm_network_security_group" "aiof_vnet_nsg" {
-  name                = "vnet-${var.env}-${var.location}-nsg"
+  name                = "vnet-${var.location}-${var.env}-nsg"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
 
