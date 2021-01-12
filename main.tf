@@ -163,6 +163,13 @@ resource "azurerm_postgresql_database" "aiof_postgres_db" {
   collation           = "English_United States.1252"
 }
 
+resource "azurerm_postgresql_database" "aiof_auth_postgres_db" {
+  name                = "aiof_auth"
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  server_name         = azurerm_postgresql_server.aiof_postgres_server.name
+  charset             = "UTF8"
+  collation           = "English_United States.1252"
+}
 
 resource "azurerm_postgresql_firewall_rule" "aiof_dbadmin_rule" {
   name                = "dbadmin"
@@ -195,12 +202,16 @@ resource "azurerm_application_insights_web_test" "heimdall-aiof-auth-health" {
   geo_locations           = ["us-ca-sjc-azr", "us-tx-sn1-azr", "us-il-ch1-azr", "us-va-ash-azr", "us-fl-mia-edge"]
 
   configuration = <<XML
-<WebTest Name="aiof-auth-health" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
-  <Items>
-    <Request Method="GET" Version="1.1" Url="https://${azurerm_app_service.aiof_auth.default_site_hostname}/health" ThinkTime="0" Timeout="120" ParseDependentRequests="False" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False"/>
-  </Items>
-</WebTest>
-XML
+  <WebTest Name="aiof-auth-health" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
+    <Items>
+      <Request Method="GET" Version="1.1" Url="https://${azurerm_app_service.aiof_auth.default_site_hostname}/health" ThinkTime="0" Timeout="120" ParseDependentRequests="False" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False"/>
+    </Items>
+  </WebTest>
+  XML
+
+  tags = {
+    "hidden-link:/subscriptions/ca878169-d059-41cb-a0f0-d2e714ea53b5/resourceGroups/aiof-dev/providers/microsoft.insights/components/heimdall-dev" = "Resource"
+  }
 }
 resource "azurerm_application_insights_web_test" "heimdall-aiof-api-health" {
   name                    = "aiof-api-health"
@@ -214,12 +225,16 @@ resource "azurerm_application_insights_web_test" "heimdall-aiof-api-health" {
   geo_locations           = ["us-ca-sjc-azr", "us-tx-sn1-azr", "us-il-ch1-azr", "us-va-ash-azr", "us-fl-mia-edge"]
 
   configuration = <<XML
-<WebTest Name="aiof-auth-health" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
-  <Items>
-    <Request Method="GET" Version="1.1" Url="https://${azurerm_app_service.aiof_api.default_site_hostname}/health" ThinkTime="0" Timeout="120" ParseDependentRequests="False" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False"/>
-  </Items>
-</WebTest>
-XML
+  <WebTest Name="aiof-auth-health" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
+    <Items>
+      <Request Method="GET" Version="1.1" Url="https://${azurerm_app_service.aiof_api.default_site_hostname}/health" ThinkTime="0" Timeout="120" ParseDependentRequests="False" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False"/>
+    </Items>
+  </WebTest>
+  XML
+
+  tags = {
+    "hidden-link:/subscriptions/ca878169-d059-41cb-a0f0-d2e714ea53b5/resourceGroups/aiof-dev/providers/microsoft.insights/components/heimdall-dev" = "Resource"
+  }
 }
 resource "azurerm_application_insights_web_test" "heimdall-aiof-metadata-health" {
   name                    = "aiof-metadata-health"
@@ -233,12 +248,16 @@ resource "azurerm_application_insights_web_test" "heimdall-aiof-metadata-health"
   geo_locations           = ["us-ca-sjc-azr", "us-tx-sn1-azr", "us-il-ch1-azr", "us-va-ash-azr", "us-fl-mia-edge"]
 
   configuration = <<XML
-<WebTest Name="aiof-metadata-health" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
-  <Items>
-    <Request Method="GET" Version="1.1" Url="https://${azurerm_app_service.aiof_metadata.default_site_hostname}/health" ThinkTime="0" Timeout="120" ParseDependentRequests="False" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False"/>
-  </Items>
-</WebTest>
-XML
+  <WebTest Name="aiof-metadata-health" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
+    <Items>
+      <Request Method="GET" Version="1.1" Url="https://${azurerm_app_service.aiof_metadata.default_site_hostname}/health" ThinkTime="0" Timeout="120" ParseDependentRequests="False" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False"/>
+    </Items>
+  </WebTest>
+  XML
+
+  tags = {
+    "hidden-link:/subscriptions/ca878169-d059-41cb-a0f0-d2e714ea53b5/resourceGroups/aiof-dev/providers/microsoft.insights/components/heimdall-dev" = "Resource"
+  }
 }
 
 
