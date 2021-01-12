@@ -34,7 +34,7 @@ All documentation for this specific repository
 [Import](https://www.terraform.io/docs/import/index.html) is used to import existing infrastructure into the terraform state. More information on the command itself can be found [here](https://www.terraform.io/docs/commands/import.html)
 
 ```ps
-terraform import -lock=false <Terraform Resource>.<Terraform Alias> <Azure Resource Id>
+terraform import -lock=false {Terraform Resource}.{Terraform Alias} {Azure Resource Id}
 ```
 
 ### Terraform reference
