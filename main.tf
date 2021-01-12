@@ -163,14 +163,6 @@ resource "azurerm_postgresql_database" "aiof_postgres_db" {
   collation           = "English_United States.1252"
 }
 
-resource "azurerm_postgresql_database" "aiof_auth_postgres_db" {
-  name                = "aiof_auth"
-  resource_group_name = azurerm_resource_group.aiof_rg.name
-  server_name         = azurerm_postgresql_server.aiof_postgres_server.name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
-}
-
 resource "azurerm_postgresql_firewall_rule" "aiof_dbadmin_rule" {
   name                = "dbadmin"
   resource_group_name = azurerm_resource_group.aiof_rg.name
