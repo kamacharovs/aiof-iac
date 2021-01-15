@@ -23,10 +23,10 @@ variable "location" {
   description = "Azure resources location"
 
   default     = {
-    dev     = "eastus"
-    qa      = "eastus"
-    staging = "eastus"
-    prod    = "eastus"
+    dev   = "eastus"
+    qa    = "eastus"
+    stage = "eastus"
+    prod  = "eastus"
   }
 }
 
@@ -35,10 +35,10 @@ variable "env" {
   description = "Environment based on current workspace"
 
   default     = {
-    dev     = "dev"
-    qa      = "qa"
-    staging = "staging"
-    prod    = "prod"
+    dev   = "dev"
+    qa    = "qa"
+    stage = "stage"
+    prod  = "prod"
   }
 }
 
