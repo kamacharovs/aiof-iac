@@ -452,3 +452,19 @@ resource "azurerm_servicebus_queue" "messaging_asbq_inbound" {
   enable_partitioning           = false
   requires_session              = false
 }
+
+resource "azurerm_servicebus_queue" "messaging_asbq_outbound" {
+  name                = "outbound"
+  resource_group_name = azurerm_resource_group.messaging_rg.name
+  namespace_name      = azurerm_servicebus_namespace.messaging_asb.name
+
+  max_size_in_megabytes = 1024
+  lock_duration         = "PT1M"
+  default_message_ttl   = "PT10M"
+  max_delivery_count    = 10
+
+  enable_batched_operations     = true
+  requires_duplicate_detection  = false
+  enable_partitioning           = false
+  requires_session              = false
+}
