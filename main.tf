@@ -411,26 +411,44 @@ resource "azurerm_app_service" "aiof_portal" {
 
 
 /*
-Notification service
+Messaging service
 */
-resource "azurerm_resource_group" "notification_rg" {
-  name     = "aiof-notification-${var.env}"
+resource "azurerm_resource_group" "messaging_rg" {
+  name     = "aiof-messaging-${var.env}"
   location = var.location
 
   tags = {
     env = var.env
-    app = var.notification_app
+    app = var.messaging_app
   }
 }
 
-resource "azurerm_servicebus_namespace" "notification_asb" {
-  name                = "aiof-notification-sb-${var.env}"
-  location            = azurerm_resource_group.notification_rg.location
-  resource_group_name = azurerm_resource_group.notification_rg.name
+resource "azurerm_servicebus_namespace" "messaging_asb" {
+  name                = "aiof-messaging-sb-${var.env}"
+  location            = azurerm_resource_group.messaging_rg.location
+  resource_group_name = azurerm_resource_group.messaging_rg.name
   sku                 = "Basic"
+  capacity            = 0
+  zone_redundant      = false
 
   tags = {
     env = var.env
-    app = var.notification_app
+    app = var.messaging_app
   }
+}
+
+resource "azurerm_servicebus_queue" "messaging_asbq_inbound" {
+  name                = "inbound"
+  resource_group_name = azurerm_resource_group.messaging_rg.name
+  namespace_name      = azurerm_servicebus_namespace.messaging_asb.name
+
+  max_size_in_megabytes = 1024
+  lock_duration         = "PT1M"
+  default_message_ttl   = "PT10M"
+  max_delivery_count    = 10
+
+  enable_batched_operations     = true
+  requires_duplicate_detection  = false
+  enable_partitioning           = false
+  requires_session              = false
 }

@@ -36,10 +36,10 @@ variable "app" {
   default     = "aiof"
 }
 
-variable "notification_app" {
+variable "messaging_app" {
   type        = string
-  description = "Notification application name"
-  default     = "aiof-notification"
+  description = "Messaging application name"
+  default     = "aiof-messaging"
 }
 
 
