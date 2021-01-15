@@ -255,7 +255,19 @@ resource "azurerm_application_insights_web_test" "heimdall-aiof-metadata-health"
 
 /*
  * App Service
- */
+*/
+resource "azurerm_app_service_plan" "consumption_service_plan" {
+  name                = "aiof-consumption-sp-${var.env[terraform.workspace]}"
+  location            = azurerm_resource_group.aiof_rg.location
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  kind                = "FunctionApp"
+
+  sku {
+    tier = "Basic"
+    size = "B1"
+  }
+}
+
 resource "azurerm_app_service_plan" "aiof_app_service_plan" {
   name                = "aiof-${var.env[terraform.workspace]}-service-plan"
   location            = azurerm_resource_group.aiof_rg.location
@@ -446,6 +458,11 @@ resource "azurerm_app_service" "aiof_portal" {
 
 /*
 Messaging service
+- Resource group
+- Service bus namespace
+- Service bus queues
+- Storage account
+- Function app
 */
 resource "azurerm_resource_group" "messaging_rg" {
   name     = "aiof-messaging-${var.env[terraform.workspace]}"
@@ -501,4 +518,34 @@ resource "azurerm_servicebus_queue" "messaging_asbq_outbound" {
   requires_duplicate_detection  = false
   enable_partitioning           = false
   requires_session              = false
+}
+
+resource "azurerm_storage_account" "messaging_sa" {
+  name                     = "aiofmsg${var.env[terraform.workspace]}"
+  resource_group_name      = azurerm_resource_group.messaging_rg.name
+  location                 = azurerm_resource_group.messaging_rg.location
+
+  account_kind             = "StorageV2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  access_tier              = "Hot"
+
+  tags = {
+    env = var.env[terraform.workspace]
+    app = var.messaging_app
+  }
+}
+
+resource "azurerm_function_app" "messaging-fa" {
+  name                       = "aiof-messaging-${var.env[terraform.workspace]}"
+  location                   = azurerm_resource_group.messaging_rg.location
+  resource_group_name        = azurerm_resource_group.messaging_rg.name
+  app_service_plan_id        = azurerm_app_service_plan.consumption_service_plan.id
+  storage_account_name       = azurerm_storage_account.messaging_sa.name
+  storage_account_access_key = azurerm_storage_account.messaging_sa.primary_access_key
+  os_type                    = "linux"
+
+  app_settings  = {
+    
+  }
 }
