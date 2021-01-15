@@ -131,33 +131,6 @@ variable "appservice_portal_version" {
   default     = "DOCKER|gkama/aiof-portal:latest"
 }
 
-variable "appservice_auth_settings" {
-  type        = map
-  description = "Auth microservice application settings"
-  default     = {
-      "FeatureManagement__RefreshToken" = "true"
-      "FeatureManagement__OpenId"       = "true"
-      "FeatureManagement__MemCache"     = "true"
-      "Data__PostgreSQL"                = ""
-      "MemCache__Ttl"                   = "900"
-      "Jwt__Expires"                    = "900"
-      "Jwt__RefreshExpires"             = "604800"
-      "Jwt__Type"                       = "Bearer"
-      "Jwt__Issuer"                     = "aiof:auth"
-      "Jwt__Audience"                   = "aiof:auth:audience"
-      "Hash__Iterations"                = "10000"
-      "Hash__SaltSize"                  = "16"
-      "Hash__KeySize"                   = "32"
-      "OpenApi__Version"                = "v1.0.0-alpha"
-      "OpenApi__Title"                  = "aiof.auth"
-      "OpenApi__Description"            = "Aiof authentication microservice"
-      "OpenApi__Contact__Name"          = "Georgi Kamacharov"
-      "OpenApi__Contact__Email"         = "gkamacharov@aiof.com"
-      "OpenApi__Contact__Url"           = "https://github.com/gkama"
-      "OpenApi__License__Name"          = "MIT"
-      "OpenApi__License__Url"           = "https://github.com/kamacharovs/aiof-auth/blob/master/LICENSE"
-  }
-}
 variable "appsettings_auth_jwt_private_key_value" {
   type        = string
   description = "Auth microservice application settings JWT private key value"
@@ -165,32 +138,6 @@ variable "appsettings_auth_jwt_private_key_value" {
 variable "appsettings_auth_jwt_public_key_value" {
   type        = string
   description = "Auth microservice application settings JWT public key value"
-}
-
-variable "appservice_api_settings" {
-  type        = map
-  description = "API microservice application settings"
-  default     = {
-      "FeatureManagement__Asset"          = "true"
-      "FeatureManagement__Goal"           = "true"
-      "FeatureManagement__Liability"      = "true"
-      "FeatureManagement__Account"        = "true"
-      "FeatureManagement__UserDependent"  = "true"
-      "Data__PostgreSQL"                  = ""
-      "Jwt__Issuer"                       = "aiof:auth"
-      "Jwt__Audience"                     = "aiof:auth:audience"
-      "Hash__Iterations"                  = "10000"
-      "Hash__SaltSize"                    = "16"
-      "Hash__KeySize"                     = "32"
-      "OpenApi__Version"                  = "v1.0.0-alpha"
-      "OpenApi__Title"                    = "aiof.api"
-      "OpenApi__Description"              = "Aiof main api microservice"
-      "OpenApi__Contact__Name"            = "Georgi Kamacharov"
-      "OpenApi__Contact__Email"           = "gkamacharov@aiof.com"
-      "OpenApi__Contact__Url"             = "https://github.com/gkama"
-      "OpenApi__License__Name"            = "MIT"
-      "OpenApi__License__Url"             = "https://github.com/kamacharovs/aiof-api/blob/master/LICENSE"
-  }
 }
 
 variable "kv_jwt_private_key" {

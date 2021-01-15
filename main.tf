@@ -308,14 +308,32 @@ resource "azurerm_app_service" "aiof_auth" {
     }
   }
 
-  app_settings = merge(
-    var.appservice_auth_settings,
-    {
-      "ApplicationInsights__InstrumentationKey" = azurerm_application_insights.heimdall.instrumentation_key
-      "Jwt__PrivateKey"                         = var.appsettings_auth_jwt_private_key_value
-      "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
-    }
-  )
+  app_settings = {
+    "ApplicationInsights__InstrumentationKey" = azurerm_application_insights.heimdall.instrumentation_key
+    "FeatureManagement__RefreshToken"         = "true"
+    "FeatureManagement__OpenId"               = "true"
+    "FeatureManagement__MemCache"             = "true"
+    "Data__PostgreSQL"                        = ""
+    "MemCache__Ttl"                           = "900"
+    "Jwt__Expires"                            = "900"
+    "Jwt__RefreshExpires"                     = "604800"
+    "Jwt__Type"                               = "Bearer"
+    "Jwt__Issuer"                             = "aiof:auth"
+    "Jwt__Audience"                           = "aiof:auth:audience"
+    "Jwt__PrivateKey"                         = var.appsettings_auth_jwt_private_key_value
+    "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
+    "Hash__Iterations"                        = "10000"
+    "Hash__SaltSize"                          = "16"
+    "Hash__KeySize"                           = "32"
+    "OpenApi__Version"                        = "v1.0.0-alpha"
+    "OpenApi__Title"                          = "aiof.auth"
+    "OpenApi__Description"                    = "Aiof authentication microservice"
+    "OpenApi__Contact__Name"                  = "Georgi Kamacharov"
+    "OpenApi__Contact__Email"                 = "gkamacharov@aiof.com"
+    "OpenApi__Contact__Url"                   = "https://github.com/gkama"
+    "OpenApi__License__Name"                  = "MIT"
+    "OpenApi__License__Url"                   = "https://github.com/kamacharovs/aiof-auth/blob/master/LICENSE"
+  }
 
   connection_string {
     name  = var.postgresql_constring_name
@@ -343,13 +361,29 @@ resource "azurerm_app_service" "aiof_api" {
     }
   }
 
-  app_settings = merge(
-    var.appservice_api_settings,
-    {
-      "ApplicationInsights__InstrumentationKey" = azurerm_application_insights.heimdall.instrumentation_key
-      "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
-    }
-  )
+  app_settings = {
+    "ApplicationInsights__InstrumentationKey" = azurerm_application_insights.heimdall.instrumentation_key
+    "FeatureManagement__Asset"                = "true"
+    "FeatureManagement__Goal"                 = "true"
+    "FeatureManagement__Liability"            = "true"
+    "FeatureManagement__Account"              = "true"
+    "FeatureManagement__UserDependent"        = "true"
+    "Data__PostgreSQL"                        = ""
+    "Jwt__Issuer"                             = "aiof:auth"
+    "Jwt__Audience"                           = "aiof:auth:audience"
+    "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
+    "Hash__Iterations"                        = "10000"
+    "Hash__SaltSize"                          = "16"
+    "Hash__KeySize"                           = "32"
+    "OpenApi__Version"                        = "v1.0.0-alpha"
+    "OpenApi__Title"                          = "aiof.api"
+    "OpenApi__Description"                    = "Aiof main api microservice"
+    "OpenApi__Contact__Name"                  = "Georgi Kamacharov"
+    "OpenApi__Contact__Email"                 = "gkamacharov@aiof.com"
+    "OpenApi__Contact__Url"                   = "https://github.com/gkama"
+    "OpenApi__License__Name"                  = "MIT"
+    "OpenApi__License__Url"                   = "https://github.com/kamacharovs/aiof-api/blob/master/LICENSE"
+  }
 
   connection_string {
     name  = var.postgresql_constring_name
