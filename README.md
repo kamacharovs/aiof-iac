@@ -10,19 +10,16 @@ Below are instructions on how to run the `aiof-iac` terraform scripts
 
 ### Local
 
-In order to run it locally, there must be an existing environment variable name `TF_VAR_storage_account_access_key`. This is an access key and it references the remote storage of the `terraform.tfstate` files. This state file exists per environment. The approach is used to keep it out of source control as it's a secret and used to access the storage account. In the current infrastructure, this is Azure storage account access key. Best practices for this will be to rotate the keys once in a month
-
-Additionally, you pass in the `terraform.tfstate` that you want to look at. For example, for `dev`, you would point to `tf/dev/terraform.tfstate` as the `key`. The storage key above will stay the same, but the environment specific state file will be changed/referenced here at runtime
+In order to run it locally, there must be an existing environment variable name `TF_VAR_storage_account_access_key`. This is an access key and it references the remote storage of the `terraform.tfstate` files. This state file exists per workspace (environment). The approach is used to keep it out of source control as it's a secret and used to access the storage account. In the current infrastructure, this is Azure storage account access key. Best practices for this will be to rotate the keys once in a month
 
 ```ps
-terraform init -lock -backend-config="key=tf/dev/terraform.tfstate" -backend-config="access_key=$env:TF_VAR_storage_account_access_key"
+terraform init -lock -backend-config="key=tf/terraform.tfstate" -backend-config="access_key=$env:TF_VAR_storage_account_access_key"
 ```
 
 After the `terraform init` command runs successfully, then you can proceed with running `terraform plan` and subsequently `terraform apply` (if needed)
 
 ```ps
-terraform init -lock -backend-config="key=tf/dev/terraform.tfstate" -backend-config="access_key=$env:TF_VAR_storage_account_access_key"
-terraform plan -lock=false
+terraform plan -lock=false -out=tfplan -input=false
 ```
 
 ## Documentation
