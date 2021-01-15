@@ -424,7 +424,7 @@ resource "azurerm_resource_group" "notification_rg" {
 }
 
 resource "azurerm_servicebus_namespace" "notification_asb" {
-  name                = "aiof-notification-${var.env}"
+  name                = "aiof-notification-sb-${var.env}"
   location            = azurerm_resource_group.notification_rg.location
   resource_group_name = azurerm_resource_group.notification_rg.name
   sku                 = "Basic"
