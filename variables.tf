@@ -36,6 +36,12 @@ variable "app" {
   default     = "aiof"
 }
 
+variable "notification_app" {
+  type        = string
+  description = "Notification application name"
+  default     = "aiof-notification"
+}
+
 
 variable "postgresql_sku_name" {
   type        = string

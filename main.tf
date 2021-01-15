@@ -409,3 +409,16 @@ resource "azurerm_app_service" "aiof_portal" {
   }
 }
 
+
+/*
+Notification service
+*/
+resource "azurerm_resource_group" "notification_rg" {
+  name     = "aiof-notification-${var.env}"
+  location = var.location
+
+  tags = {
+    env = var.env
+    app = var.notification_app
+  }
+}
