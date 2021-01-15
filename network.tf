@@ -5,13 +5,13 @@
  * - Network security group
  */
 resource "azurerm_virtual_network" "aiof_vnet" {
-  name                = "vnet-${var.location}-${var.env}"
+  name                = "vnet-${var.location}-${var.env[terraform.workspace]}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
   address_space       = ["10.2.0.0/16"]
 
   tags = {
-    env = var.env
+    env = var.env[terraform.workspace]
   }
 }
 
@@ -44,12 +44,12 @@ resource "azurerm_subnet" "aksnodes" {
 }
 /*
 resource "azurerm_network_security_group" "aiof_vnet_nsg" {
-  name                = "vnet-${var.location}-${var.env}-nsg"
+  name                = "vnet-${var.location}-${var.env[terraform.workspace]}-nsg"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
 
   tags = {
-    env = var.env
+    env = var.env[terraform.workspace]
   }
 }
 

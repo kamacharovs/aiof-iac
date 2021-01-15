@@ -25,9 +25,15 @@ variable "location" {
 }
 
 variable "env" {
-  type        = string
-  description = "Azure resource environment"
-  default     = "dev"
+  type = map(string)
+  description = "Workspace to env mapping"
+
+  default = {
+    dev     = "dev"
+    qa      = "qa"
+    staging = "staging"
+    prod    = "prod"
+  }
 }
 
 variable "app" {
