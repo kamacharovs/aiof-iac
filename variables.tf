@@ -19,16 +19,22 @@ variable "client_secret" {
 }
 
 variable "location" {
-  type        = string
+  type        = map(string)
   description = "Azure resources location"
-  default     = "eastus"
+
+  default     = {
+    dev     = "eastus"
+    qa      = "eastus"
+    staging = "eastus"
+    prod    = "eastus"
+  }
 }
 
 variable "env" {
-  type = map(string)
-  description = "Workspace to env mapping"
+  type        = map(string)
+  description = "Environment based on current workspace"
 
-  default = {
+  default     = {
     dev     = "dev"
     qa      = "qa"
     staging = "staging"

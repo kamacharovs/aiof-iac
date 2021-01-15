@@ -19,7 +19,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "aiof_rg" {
   name     = "aiof-${var.env[terraform.workspace]}"
-  location = var.location
+  location = var.location[terraform.workspace]
 
   tags = {
     env = var.env[terraform.workspace]
@@ -449,7 +449,7 @@ Messaging service
 */
 resource "azurerm_resource_group" "messaging_rg" {
   name     = "aiof-messaging-${var.env[terraform.workspace]}"
-  location = var.location
+  location = var.location[terraform.workspace]
 
   tags = {
     env = var.env[terraform.workspace]
