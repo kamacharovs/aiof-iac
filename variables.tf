@@ -168,3 +168,18 @@ variable "cors_github_io" {
   description = "github.io for cors"
   default     = "https://kamacharovs.github.io"
 }
+
+/*
+Messaging service
+*/
+variable "messaging_sbns_sku" {
+  type        = map(string)
+  description = "The sku of the service bus namespace"
+
+  default     = {
+    dev   = "Basic"
+    qa    = "Basic"
+    stage = "Basic"
+    prod  = "Basic"
+  }
+}

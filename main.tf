@@ -478,7 +478,7 @@ resource "azurerm_servicebus_namespace" "messaging_asb" {
   name                = "aiof-messaging-sb-${var.env[terraform.workspace]}"
   location            = azurerm_resource_group.messaging_rg.location
   resource_group_name = azurerm_resource_group.messaging_rg.name
-  sku                 = "Basic"
+  sku                 = var.messaging_sbns_sku[terraform.workspace]
   capacity            = 0
   zone_redundant      = false
 
