@@ -478,6 +478,7 @@ resource "azurerm_servicebus_namespace" "messaging_asb" {
   name                = "aiof-messaging-sb-${var.env[terraform.workspace]}"
   location            = azurerm_resource_group.messaging_rg.location
   resource_group_name = azurerm_resource_group.messaging_rg.name
+
   sku                 = var.messaging_sbns_sku[terraform.workspace]
   capacity            = 0
   zone_redundant      = false
@@ -522,8 +523,8 @@ resource "azurerm_servicebus_queue" "messaging_asbq_outbound" {
 
 resource "azurerm_storage_account" "messaging_sa" {
   name                     = "aiofmsg${var.env[terraform.workspace]}"
-  resource_group_name      = azurerm_resource_group.messaging_rg.name
   location                 = azurerm_resource_group.messaging_rg.location
+  resource_group_name      = azurerm_resource_group.messaging_rg.name
 
   account_kind             = "StorageV2"
   account_tier             = "Standard"
@@ -540,6 +541,7 @@ resource "azurerm_function_app" "messaging-fa" {
   name                       = "aiof-messaging-${var.env[terraform.workspace]}"
   location                   = azurerm_resource_group.messaging_rg.location
   resource_group_name        = azurerm_resource_group.messaging_rg.name
+
   app_service_plan_id        = azurerm_app_service_plan.consumption_service_plan.id
   storage_account_name       = azurerm_storage_account.messaging_sa.name
   storage_account_access_key = azurerm_storage_account.messaging_sa.primary_access_key
