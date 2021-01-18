@@ -505,8 +505,8 @@ resource "azurerm_servicebus_queue" "messaging_asbq_inbound" {
   requires_session              = false
 }
 
-resource "azurerm_servicebus_queue" "messaging_asbq_outbound" {
-  name                = "outbound"
+resource "azurerm_servicebus_queue" "messaging_asbq_email" {
+  name                = "email"
   resource_group_name = azurerm_resource_group.messaging_rg.name
   namespace_name      = azurerm_servicebus_namespace.messaging_asb.name
 
