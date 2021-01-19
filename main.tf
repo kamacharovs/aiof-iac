@@ -548,6 +548,6 @@ resource "azurerm_function_app" "messaging-fa" {
   os_type                    = "linux"
 
   app_settings  = {
-    
+    ServiceBusConnectionString  = azurerm_servicebus_namespace.messaging_asb.default_primary_connection_string
   }
 }
