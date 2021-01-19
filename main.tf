@@ -497,7 +497,7 @@ resource "azurerm_servicebus_queue" "messaging_asbq_inbound" {
   max_size_in_megabytes = 1024
   lock_duration         = "PT1M"
   default_message_ttl   = "PT10M"
-  max_delivery_count    = 10
+  max_delivery_count    = 3
 
   enable_batched_operations     = true
   requires_duplicate_detection  = false
@@ -513,7 +513,7 @@ resource "azurerm_servicebus_queue" "messaging_asbq_email" {
   max_size_in_megabytes = 1024
   lock_duration         = "PT1M"
   default_message_ttl   = "PT10M"
-  max_delivery_count    = 10
+  max_delivery_count    = 3
 
   enable_batched_operations     = true
   requires_duplicate_detection  = false
