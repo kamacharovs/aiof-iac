@@ -541,8 +541,8 @@ resource "azurerm_storage_table" "messaging_email_sa_table" {
   name                 = "email"
   storage_account_name = azurerm_storage_account.messaging_log_sa.name
 }
-resource "azurerm_storage_table" "messaging_inbounddl_sa_table" {
-  name                 = "dl"
+resource "azurerm_storage_table" "messaging_deadletter_sa_table" {
+  name                 = "deadletter"
   storage_account_name = azurerm_storage_account.messaging_log_sa.name
 }
 
