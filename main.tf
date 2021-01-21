@@ -255,7 +255,7 @@ resource "azurerm_application_insights_web_test" "heimdall-aiof-metadata-health"
 
 /*
  * App Service
-*/
+ */
 resource "azurerm_app_service_plan" "consumption_service_plan" {
   name                = "aiof-consumption-sp-${var.env[terraform.workspace]}"
   location            = azurerm_resource_group.aiof_rg.location
@@ -461,7 +461,8 @@ Messaging service
 - Resource group
 - Service bus namespace
 - Service bus queues
-- Storage account
+- Storage account (function app)
+- Storage account (log)
 - Function app
 */
 resource "azurerm_resource_group" "messaging_rg" {
@@ -535,6 +536,14 @@ resource "azurerm_storage_account" "messaging_log_sa" {
     env = var.env[terraform.workspace]
     app = var.messaging_app
   }
+}
+resource "azurerm_storage_table" "messaging_email_sa_table" {
+  name                 = "email"
+  storage_account_name = azurerm_storage_account.messaging_log_sa.name
+}
+resource "azurerm_storage_table" "messaging_emaildl_sa_table" {
+  name                 = "emaildl"
+  storage_account_name = azurerm_storage_account.messaging_log_sa.name
 }
 
 resource "azurerm_storage_account" "messaging_sa" {
