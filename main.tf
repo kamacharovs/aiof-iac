@@ -521,6 +521,22 @@ resource "azurerm_servicebus_queue" "messaging_asbq_email" {
   requires_session              = false
 }
 
+resource "azurerm_storage_account" "messaging_log_sa" {
+  name                     = "aiofmsglog${var.env[terraform.workspace]}"
+  location                 = azurerm_resource_group.messaging_rg.location
+  resource_group_name      = azurerm_resource_group.messaging_rg.name
+
+  account_kind             = "StorageV2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  access_tier              = "Hot"
+
+  tags = {
+    env = var.env[terraform.workspace]
+    app = var.messaging_app
+  }
+}
+
 resource "azurerm_storage_account" "messaging_sa" {
   name                     = "aiofmsg${var.env[terraform.workspace]}"
   location                 = azurerm_resource_group.messaging_rg.location
