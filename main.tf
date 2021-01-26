@@ -537,6 +537,10 @@ resource "azurerm_storage_account" "messaging_log_sa" {
     app = var.messaging_app
   }
 }
+resource "azurerm_storage_table" "messaging_inboundsa_table" {
+  name                 = "inbound"
+  storage_account_name = azurerm_storage_account.messaging_log_sa.name
+}
 resource "azurerm_storage_table" "messaging_email_sa_table" {
   name                 = "email"
   storage_account_name = azurerm_storage_account.messaging_log_sa.name
