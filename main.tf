@@ -111,6 +111,7 @@ resource "azurerm_key_vault_secret" "kv_jwt_public_key" {
 }
 
 
+/*
 resource "azurerm_container_registry" "aiof_cr" {
   name                     = "aiof${var.env[terraform.workspace]}"
   resource_group_name      = azurerm_resource_group.aiof_rg.name
@@ -123,6 +124,7 @@ resource "azurerm_container_registry" "aiof_cr" {
     app = var.app
   }
 }
+*/
 
 
 /*
