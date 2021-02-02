@@ -4,6 +4,11 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 2.39.0"
     }
+
+    azuread = {
+      source = "hashicorp/azuread"
+      version = "1.3.0"
+    }
   }
 }
 
@@ -14,6 +19,12 @@ provider "azurerm" {
   client_secret   = var.client_secret
 
   features {}
+}
+
+provider "azuread" {
+  tenant_id       = var.tenant_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
 }
 
 
@@ -61,7 +72,7 @@ resource "azurerm_key_vault" "aiof_kv" {
 
   access_policy {
     tenant_id = data.azurerm_client_config.current_rg.tenant_id
-    object_id = var.gkama_object_id
+    object_id = data.azuread_user.gkamacharov.object_id
 
     key_permissions = [
       "list",
