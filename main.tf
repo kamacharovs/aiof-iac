@@ -72,7 +72,7 @@ resource "azurerm_key_vault" "aiof_kv" {
 
   access_policy {
     tenant_id = data.azurerm_client_config.current_rg.tenant_id
-    object_id = var.gkama_object_id
+    object_id = data.azuread_user.gkamacharov.object_id
 
     key_permissions = [
       "list",
