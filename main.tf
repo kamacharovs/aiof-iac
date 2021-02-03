@@ -31,6 +31,15 @@ provider "azuread" {
 locals {
   env       = var.env[terraform.workspace]
   location  = var.location[terraform.workspace]
+
+  env_tags = {
+    env = local.env
+  }
+
+  aiof_tags = {
+    env = local.env
+    app = var.app
+  }
 }
 
 
@@ -38,10 +47,7 @@ resource "azurerm_resource_group" "aiof_rg" {
   name     = "aiof-${local.env}"
   location = local.location
 
-  tags = {
-    env = local.env
-    app = var.app
-  }
+  tags = local.aiof_tags
 }
 
 
@@ -104,27 +110,21 @@ resource "azurerm_key_vault" "aiof_kv" {
     bypass         = "AzureServices"
   }
 
-  tags = {
-    env = local.env
-  }
+  tags = local.env_tags
 }
 resource "azurerm_key_vault_secret" "kv_jwt_private_key" {
   name         = var.kv_jwt_private_key
   value        = var.appsettings_auth_jwt_private_key_value
   key_vault_id = azurerm_key_vault.aiof_kv.id
 
-  tags = {
-    env = local.env
-  }
+  tags = local.env_tags
 }
 resource "azurerm_key_vault_secret" "kv_jwt_public_key" {
   name         = var.kv_jwt_public_key
   value        = var.appsettings_auth_jwt_public_key_value
   key_vault_id = azurerm_key_vault.aiof_kv.id
 
-  tags = {
-    env = local.env
-  }
+  tags = local.env_tags
 }
 
 
@@ -136,10 +136,7 @@ resource "azurerm_container_registry" "aiof_cr" {
   sku                      = "Basic"
   admin_enabled            = false
 
-  tags = {
-    env = local.env
-    app = var.app
-  }
+  tags = local.aiof_tags
 }
 */
 
@@ -169,9 +166,7 @@ resource "azurerm_postgresql_server" "aiof_postgres_server" {
   public_network_access_enabled    = true
   ssl_enforcement_enabled          = false
 
-  tags = {
-    env = local.env
-  }
+  tags = local.env_tags
 }
 
 resource "azurerm_postgresql_database" "aiof_postgres_db" {
@@ -282,8 +277,8 @@ resource "azurerm_app_service_plan" "consumption_service_plan" {
   kind                = "FunctionApp"
 
   sku {
-    tier = "Basic"
-    size = "B1"
+    tier = "Dynamic"
+    size = "Y1"
   }
 }
 
@@ -299,9 +294,7 @@ resource "azurerm_app_service_plan" "aiof_app_service_plan" {
     size = "B1"
   }
 
-  tags = {
-    env = local.env
-  }
+  tags = local.env_tags
 }
 
 /*resource "azurerm_app_service" "aiof_data" {
@@ -319,9 +312,7 @@ resource "azurerm_app_service_plan" "aiof_app_service_plan" {
     "WEBSITES_PORT" = "80"
   }
 
-  tags = {
-    env = local.env
-  }
+  tags = local.env_tags
 }*/
 
 resource "azurerm_app_service" "aiof_auth" {
@@ -372,9 +363,7 @@ resource "azurerm_app_service" "aiof_auth" {
     value = ""
   }
 
-  tags = {
-    env = local.env
-  }
+  tags = local.env_tags
 }
 
 resource "azurerm_app_service" "aiof_api" {
@@ -422,9 +411,7 @@ resource "azurerm_app_service" "aiof_api" {
     value = ""
   }
 
-  tags = {
-    env = local.env
-  }
+  tags = local.env_tags
 }
 
 resource "azurerm_app_service" "aiof_metadata" {
@@ -446,9 +433,7 @@ resource "azurerm_app_service" "aiof_metadata" {
     "WEBSITES_PORT" = "80"
   }
 
-  tags = {
-    env = local.env
-  }
+  tags = local.env_tags
 }
 
 resource "azurerm_app_service" "aiof_portal" {
@@ -469,9 +454,7 @@ resource "azurerm_app_service" "aiof_portal" {
     #"REACT_APP_API_METADATA_ROOT"   = "https://${azurerm_app_service.aiof_metadata.default_site_hostname}/api"
   }
 
-  tags = {
-    env = local.env
-  }
+  tags = local.env_tags
 }
 
 
