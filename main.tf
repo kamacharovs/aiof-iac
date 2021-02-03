@@ -270,18 +270,6 @@ resource "azurerm_application_insights_web_test" "heimdall-aiof-metadata-health"
 /*
  * App Service
  */
-resource "azurerm_app_service_plan" "consumption_service_plan" {
-  name                = "aiof-consumption-sp-${local.env}"
-  location            = azurerm_resource_group.aiof_rg.location
-  resource_group_name = azurerm_resource_group.aiof_rg.name
-  kind                = "FunctionApp"
-
-  sku {
-    tier = "Dynamic"
-    size = "Y1"
-  }
-}
-
 resource "azurerm_app_service_plan" "aiof_app_service_plan" {
   name                = "aiof-${local.env}-service-plan"
   location            = azurerm_resource_group.aiof_rg.location
@@ -573,7 +561,7 @@ resource "azurerm_function_app" "messaging-fa" {
   location                   = azurerm_resource_group.messaging_rg.location
   resource_group_name        = azurerm_resource_group.messaging_rg.name
 
-  app_service_plan_id        = azurerm_app_service_plan.consumption_service_plan.id
+  app_service_plan_id        = azurerm_app_service_plan.aiof_app_service_plan.id
   storage_account_name       = azurerm_storage_account.messaging_sa.name
   storage_account_access_key = azurerm_storage_account.messaging_sa.primary_access_key
   os_type                    = "linux"
