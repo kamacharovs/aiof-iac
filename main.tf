@@ -28,12 +28,18 @@ provider "azuread" {
 }
 
 
+locals {
+  env       = var.env[terraform.workspace]
+  location  = var.location[terraform.workspace]
+}
+
+
 resource "azurerm_resource_group" "aiof_rg" {
-  name     = "aiof-${var.env[terraform.workspace]}"
-  location = var.location[terraform.workspace]
+  name     = "aiof-${local.env}"
+  location = local.location
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
     app = var.app
   }
 }
@@ -41,7 +47,7 @@ resource "azurerm_resource_group" "aiof_rg" {
 
 data "azurerm_client_config" "current_rg" {}
 resource "azurerm_key_vault" "aiof_kv" {
-  name                        = "aiof-${var.env[terraform.workspace]}-kv"
+  name                        = "aiof-${local.env}-kv"
   location                    = azurerm_resource_group.aiof_rg.location
   resource_group_name         = azurerm_resource_group.aiof_rg.name
   enabled_for_disk_encryption = false
@@ -99,7 +105,7 @@ resource "azurerm_key_vault" "aiof_kv" {
   }
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
   }
 }
 resource "azurerm_key_vault_secret" "kv_jwt_private_key" {
@@ -108,7 +114,7 @@ resource "azurerm_key_vault_secret" "kv_jwt_private_key" {
   key_vault_id = azurerm_key_vault.aiof_kv.id
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
   }
 }
 resource "azurerm_key_vault_secret" "kv_jwt_public_key" {
@@ -117,21 +123,21 @@ resource "azurerm_key_vault_secret" "kv_jwt_public_key" {
   key_vault_id = azurerm_key_vault.aiof_kv.id
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
   }
 }
 
 
 /*
 resource "azurerm_container_registry" "aiof_cr" {
-  name                     = "aiof${var.env[terraform.workspace]}"
+  name                     = "aiof${local.env}"
   resource_group_name      = azurerm_resource_group.aiof_rg.name
   location                 = azurerm_resource_group.aiof_rg.location
   sku                      = "Basic"
   admin_enabled            = false
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
     app = var.app
   }
 }
@@ -145,7 +151,7 @@ resource "azurerm_container_registry" "aiof_cr" {
  * - Virtual network rule for DB Admin
 */
 resource "azurerm_postgresql_server" "aiof_postgres_server" {
-  name                = "aiof-${var.env[terraform.workspace]}"
+  name                = "aiof-${local.env}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
  
@@ -164,7 +170,7 @@ resource "azurerm_postgresql_server" "aiof_postgres_server" {
   ssl_enforcement_enabled          = false
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
   }
 }
 
@@ -189,7 +195,7 @@ resource "azurerm_postgresql_firewall_rule" "aiof_dbadmin_rule" {
  * Application Insights
  */
 resource "azurerm_application_insights" "heimdall" {
-  name                = "heimdall-${var.env[terraform.workspace]}"
+  name                = "heimdall-${local.env}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
   application_type    = var.application_insights_application_type
@@ -270,7 +276,7 @@ resource "azurerm_application_insights_web_test" "heimdall-aiof-metadata-health"
  * App Service
  */
 resource "azurerm_app_service_plan" "consumption_service_plan" {
-  name                = "aiof-consumption-sp-${var.env[terraform.workspace]}"
+  name                = "aiof-consumption-sp-${local.env}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
   kind                = "FunctionApp"
@@ -282,7 +288,7 @@ resource "azurerm_app_service_plan" "consumption_service_plan" {
 }
 
 resource "azurerm_app_service_plan" "aiof_app_service_plan" {
-  name                = "aiof-${var.env[terraform.workspace]}-service-plan"
+  name                = "aiof-${local.env}-service-plan"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
   kind                = "Linux"
@@ -294,12 +300,12 @@ resource "azurerm_app_service_plan" "aiof_app_service_plan" {
   }
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
   }
 }
 
 /*resource "azurerm_app_service" "aiof_data" {
-  name                = "aiof-data-${var.env[terraform.workspace]}"
+  name                = "aiof-data-${local.env}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
   app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
@@ -314,12 +320,12 @@ resource "azurerm_app_service_plan" "aiof_app_service_plan" {
   }
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
   }
 }*/
 
 resource "azurerm_app_service" "aiof_auth" {
-  name                = "aiof-auth-${var.env[terraform.workspace]}"
+  name                = "aiof-auth-${local.env}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
   app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
@@ -367,12 +373,12 @@ resource "azurerm_app_service" "aiof_auth" {
   }
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
   }
 }
 
 resource "azurerm_app_service" "aiof_api" {
-  name                = "aiof-api-${var.env[terraform.workspace]}"
+  name                = "aiof-api-${local.env}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
   app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
@@ -417,12 +423,12 @@ resource "azurerm_app_service" "aiof_api" {
   }
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
   }
 }
 
 resource "azurerm_app_service" "aiof_metadata" {
-  name                = "aiof-metadata-${var.env[terraform.workspace]}"
+  name                = "aiof-metadata-${local.env}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
   app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
@@ -441,12 +447,12 @@ resource "azurerm_app_service" "aiof_metadata" {
   }
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
   }
 }
 
 resource "azurerm_app_service" "aiof_portal" {
-  name                = "aiof-portal-${var.env[terraform.workspace]}"
+  name                = "aiof-portal-${local.env}"
   location            = azurerm_resource_group.aiof_rg.location
   resource_group_name = azurerm_resource_group.aiof_rg.name
   app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
@@ -464,7 +470,7 @@ resource "azurerm_app_service" "aiof_portal" {
   }
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
   }
 }
 
@@ -479,17 +485,17 @@ Messaging service
 - Function app
 */
 resource "azurerm_resource_group" "messaging_rg" {
-  name     = "aiof-messaging-${var.env[terraform.workspace]}"
-  location = var.location[terraform.workspace]
+  name     = "aiof-messaging-${local.env}"
+  location = local.location
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
     app = var.messaging_app
   }
 }
 
 resource "azurerm_servicebus_namespace" "messaging_asb" {
-  name                = "aiof-messaging-sb-${var.env[terraform.workspace]}"
+  name                = "aiof-messaging-sb-${local.env}"
   location            = azurerm_resource_group.messaging_rg.location
   resource_group_name = azurerm_resource_group.messaging_rg.name
 
@@ -498,7 +504,7 @@ resource "azurerm_servicebus_namespace" "messaging_asb" {
   zone_redundant      = false
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
     app = var.messaging_app
   }
 }
@@ -536,7 +542,7 @@ resource "azurerm_servicebus_queue" "messaging_asbq_email" {
 }
 
 resource "azurerm_storage_account" "messaging_log_sa" {
-  name                     = "aiofmsglog${var.env[terraform.workspace]}"
+  name                     = "aiofmsglog${local.env}"
   location                 = azurerm_resource_group.messaging_rg.location
   resource_group_name      = azurerm_resource_group.messaging_rg.name
 
@@ -546,7 +552,7 @@ resource "azurerm_storage_account" "messaging_log_sa" {
   access_tier              = "Hot"
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
     app = var.messaging_app
   }
 }
@@ -564,7 +570,7 @@ resource "azurerm_storage_table" "messaging_deadletter_sa_table" {
 }
 
 resource "azurerm_storage_account" "messaging_sa" {
-  name                     = "aiofmsg${var.env[terraform.workspace]}"
+  name                     = "aiofmsg${local.env}"
   location                 = azurerm_resource_group.messaging_rg.location
   resource_group_name      = azurerm_resource_group.messaging_rg.name
 
@@ -574,13 +580,13 @@ resource "azurerm_storage_account" "messaging_sa" {
   access_tier              = "Hot"
 
   tags = {
-    env = var.env[terraform.workspace]
+    env = local.env
     app = var.messaging_app
   }
 }
 
 resource "azurerm_function_app" "messaging-fa" {
-  name                       = "aiof-messaging-${var.env[terraform.workspace]}"
+  name                       = "aiof-messaging-${local.env}"
   location                   = azurerm_resource_group.messaging_rg.location
   resource_group_name        = azurerm_resource_group.messaging_rg.name
 
