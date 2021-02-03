@@ -13,13 +13,19 @@ Below are instructions on how to run the `aiof-iac` terraform scripts
 In order to run it locally, there must be an existing environment variable name `TF_VAR_storage_account_access_key`. This is an access key and it references the remote storage of the `terraform.tfstate` files. This state file exists per workspace (environment). The approach is used to keep it out of source control as it's a secret and used to access the storage account. In the current infrastructure, this is Azure storage account access key. Best practices for this will be to rotate the keys once in a month
 
 ```ps
-terraform init -lock -backend-config="key=tf/terraform.tfstate" -backend-config="access_key=$env:TF_VAR_storage_account_access_key"
+terraform init -lock -backend-config="access_key=$env:TF_VAR_storage_account_access_key"
 ```
 
 After the `terraform init` command runs successfully, then you can proceed with running `terraform plan` and subsequently `terraform apply` (if needed)
 
 ```ps
 terraform plan -lock=false -out=tfplan -input=false
+```
+
+Apply
+
+```ps
+terraform apply -lock=false tfplan
 ```
 
 ## Documentation
