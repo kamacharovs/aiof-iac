@@ -335,14 +335,14 @@ resource "azurerm_app_service" "aiof_auth" {
     "Hash__Iterations"                        = "10000"
     "Hash__SaltSize"                          = "16"
     "Hash__KeySize"                           = "32"
-    "OpenApi__Version"                        = "v1.0.0-alpha"
-    "OpenApi__Title"                          = "aiof.auth"
-    "OpenApi__Description"                    = "Aiof authentication microservice"
-    "OpenApi__Contact__Name"                  = "Georgi Kamacharov"
-    "OpenApi__Contact__Email"                 = "gkamacharov@aiof.com"
-    "OpenApi__Contact__Url"                   = "https://github.com/gkama"
-    "OpenApi__License__Name"                  = "MIT"
-    "OpenApi__License__Url"                   = "https://github.com/kamacharovs/aiof-auth/blob/master/LICENSE"
+    "OpenApi__Version"                        = var.open_api.version_auth
+    "OpenApi__Title"                          = var.open_api.title_auth
+    "OpenApi__Description"                    = var.open_api.description_auth
+    "OpenApi__Contact__Name"                  = var.open_api.contact_name
+    "OpenApi__Contact__Email"                 = var.open_api.contact_email
+    "OpenApi__Contact__Url"                   = var.open_api.contact_url
+    "OpenApi__License__Name"                  = var.open_api.license_name_auth
+    "OpenApi__License__Url"                   = var.open_api.license_url_auth
   }
 
   connection_string {
@@ -383,14 +383,14 @@ resource "azurerm_app_service" "aiof_api" {
     "Hash__Iterations"                        = "10000"
     "Hash__SaltSize"                          = "16"
     "Hash__KeySize"                           = "32"
-    "OpenApi__Version"                        = "v1.0.0-alpha"
-    "OpenApi__Title"                          = "aiof.api"
-    "OpenApi__Description"                    = "Aiof main api microservice"
-    "OpenApi__Contact__Name"                  = "Georgi Kamacharov"
-    "OpenApi__Contact__Email"                 = "gkamacharov@aiof.com"
-    "OpenApi__Contact__Url"                   = "https://github.com/gkama"
-    "OpenApi__License__Name"                  = "MIT"
-    "OpenApi__License__Url"                   = "https://github.com/kamacharovs/aiof-api/blob/master/LICENSE"
+    "OpenApi__Version"                        = var.open_api.version_api
+    "OpenApi__Title"                          = var.open_api.title_api
+    "OpenApi__Description"                    = var.open_api.description_api
+    "OpenApi__Contact__Name"                  = var.open_api.contact_name
+    "OpenApi__Contact__Email"                 = var.open_api.contact_email
+    "OpenApi__Contact__Url"                   = var.open_api.contact_url
+    "OpenApi__License__Name"                  = var.open_api.license_name_api
+    "OpenApi__License__Url"                   = var.open_api.license_url_api
   }
 
   connection_string {

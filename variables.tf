@@ -165,6 +165,32 @@ variable "cors_github_io" {
 }
 
 /*
+Microservices OpenAPI
+*/
+variable "open_api" {
+  type        = any
+  description = "Anything OpenAPI"
+
+  default = {
+    contact_name  = "Georgi Kamacharov"
+    contact_email = "gkamacharov@aiof.com"
+    contact_url   = "https://github.com/gkama"
+
+    version_auth      = "v1.0.0-alpha"
+    title_auth        = "aiof.auth"
+    description_auth  = "Aiof authentication microservice"
+    license_name_auth = "MIT"
+    license_url_auth  = "https://github.com/kamacharovs/aiof-auth/blob/master/LICENSE"
+
+    version_api       = "v1.0.0-alpha"
+    title_api         = "aiof.api"
+    description_api   = "Aiof main api microservice"
+    license_name_api  = "MIT"
+    license_url_api   = "https://github.com/kamacharovs/aiof-api/blob/master/LICENSE"
+  }
+}
+
+/*
 Messaging service
 */
 variable "messaging_sbns_sku" {
