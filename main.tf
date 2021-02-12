@@ -391,9 +391,9 @@ resource "azurerm_app_service" "aiof_api" {
     "OpenApi__Contact__Url"                   = var.open_api.contact_url
     "OpenApi__License__Name"                  = var.open_api.license_name_api
     "OpenApi__License__Url"                   = var.open_api.license_url_api
-    "RateLimit__Seconds"                      = "10"
-    "RateLimit__Minutes"                      = "60"
-    "RateLimit__Hours"                        = "3600"
+    "RateLimit__Second"                       = "10"
+    "RateLimit__Minute"                       = "120"
+    "RateLimit__Hour"                         = "3600"
   }
 
   connection_string {
