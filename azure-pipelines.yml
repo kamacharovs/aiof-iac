@@ -15,6 +15,13 @@ steps:
     command: validate
     workingDirectory: $(agent.builddirectory)
 
+- task: TerraformTaskV1@0
+  displayName: terraform validate github
+  inputs:
+    provider: github
+    command: validate
+    workingDirectory: $(agent.builddirectory)/github
+
 - task: CopyFiles@2
   displayName: copy files
   inputs:
