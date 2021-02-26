@@ -65,6 +65,7 @@ terraform import -lock=false {Terraform Resource}.{Terraform Alias} {Azure Resou
 - [Older versions of Terraform](https://releases.hashicorp.com/terraform/)
 - [Backends Data Source Configuration](https://www.terraform.io/docs/backends/types/azurerm.html#data-source-configuration)
 - [Workspaces](https://www.terraform.io/docs/state/workspaces.html)
+- [GitHub Provider](https://registry.terraform.io/providers/integrations/github/latest/docs)
 
 ### Versioning
 
