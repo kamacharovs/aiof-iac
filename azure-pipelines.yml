@@ -14,18 +14,6 @@ steps:
     provider: azurerm
     command: validate
     workingDirectory: $(agent.builddirectory)
-    
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'cd ./github'
-
-- task: TerraformTaskV1@0
-  displayName: terraform validate github
-  inputs:
-    provider: github
-    command: validate
-    workingDirectory: $(agent.builddirectory)/github
 
 - task: CopyFiles@2
   displayName: copy files
