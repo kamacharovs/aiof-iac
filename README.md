@@ -63,6 +63,7 @@ terraform import -lock=false {Terraform Resource}.{Terraform Alias} {Azure Resou
 - [Upgrading to Terraform v0.13](https://www.terraform.io/upgrade-guides/0-13.html)
 - [Upgrade Guides](https://www.terraform.io/upgrade-guides/index.html)
 - [Older versions of Terraform](https://releases.hashicorp.com/terraform/)
+- [Backends](https://www.terraform.io/docs/language/settings/backends/index.html)
 - [Backends Data Source Configuration](https://www.terraform.io/docs/backends/types/azurerm.html#data-source-configuration)
 - [Workspaces](https://www.terraform.io/docs/state/workspaces.html)
 - [GitHub Provider](https://registry.terraform.io/providers/integrations/github/latest/docs)
