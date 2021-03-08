@@ -29,3 +29,15 @@ After `terraform init` you can run a plan and apply (if needed)
 terraform plan -out=tfplan
 terraform apply tfplan
 ```
+
+## Documentation
+
+All documentation for GitHub specific provider
+
+### Terraform
+
+- [GitHub Provider](https://registry.terraform.io/providers/integrations/github/latest/docs)
+
+### Github repositories
+
+- [integrations/terraform-provider-github](https://github.com/integrations/terraform-provider-github)
