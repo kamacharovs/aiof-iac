@@ -45,3 +45,28 @@ resource "github_repository" "aiof_messaging" {
     "netcore31"
   ]
 }
+
+resource "github_repository" "aiof_iac" {
+  name        = "aiof-iac"
+  description = "All in one finance infrastructure as code"
+
+  visibility          = "public"
+  has_issues          = true
+  has_projects        = true
+  has_wiki            = true
+  has_downloads       = true
+  archive_on_destroy  = true
+
+  allow_merge_commit  = false
+  allow_rebase_merge  = false
+  allow_squash_merge  = false
+
+  topics = [
+    "terraform",
+    "hcl",
+    "infrastructure-as-code",
+    "azurerm",
+    "azuread",
+    "azure-pipelines"
+  ]
+}
