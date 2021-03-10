@@ -70,3 +70,26 @@ resource "github_repository" "aiof_iac" {
     "azure-pipelines"
   ]
 }
+
+resource "github_repository" "aiof_portal" {
+  name        = "aiof-portal"
+  description = "All in one finance front end UI"
+
+  visibility          = "public"
+  has_issues          = true
+  has_projects        = true
+  has_wiki            = true
+  has_downloads       = true
+  archive_on_destroy  = true
+
+  allow_merge_commit  = false
+  allow_rebase_merge  = false
+  allow_squash_merge  = false
+
+  topics = [
+    "react",
+    "javascript",
+    "docker",
+    "frontend"
+  ]
+}
