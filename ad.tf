@@ -1,3 +1,9 @@
+provider "azuread" {
+  tenant_id       = var.tenant_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+}
+
 data "azuread_user" "gkamacharov" {
   object_id = "9bcebdaf-b8ba-4a8f-8cc0-1d1bf4ecbeed"
 }
