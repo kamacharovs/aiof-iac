@@ -40,6 +40,14 @@ All documentation for this specific repository
 terraform import -lock=false {Terraform Resource}.{Terraform Alias} {Azure Resource Id}
 ```
 
+#### Module import
+
+Module import is a little different
+
+```ps
+terraform import -lock=false module.{Module Name}.{Terraform Resource}.{Terraform Alias} {Azure Resource Id}
+```
+
 ### Terraform reference
 
 - [azurerm_resource_group](https://www.terraform.io/docs/providers/azurerm/r/resource_group.html)
