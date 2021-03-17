@@ -94,13 +94,6 @@ variable "kubernetes_version" {
 }
 
 
-variable "application_insights_application_type" {
-  type        = string
-  description = "Application Insights application type"
-  default     = "web"
-}
-
-
 variable "appservice_data_version" {
   type        = string
   description = "The version of Data microservice"

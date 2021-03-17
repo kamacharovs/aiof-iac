@@ -122,17 +122,21 @@ resource "azurerm_key_vault_secret" "kv_jwt_public_key" {
 }
 
 
-/*
-resource "azurerm_container_registry" "aiof_cr" {
-  name                     = "aiof${local.env}"
-  resource_group_name      = azurerm_resource_group.aiof_rg.name
-  location                 = azurerm_resource_group.aiof_rg.location
-  sku                      = "Basic"
-  admin_enabled            = false
+module "monitor" {
+  source = "./modules/monitor"
 
-  tags = local.aiof_tags
+  location  = local.location
+  env       = local.env
+
+  rg = {
+    location  = azurerm_resource_group.aiof_rg.location
+    name      = azurerm_resource_group.aiof_rg.name
+  }
+
+  aiof_auth_hostname      = azurerm_app_service.aiof_auth.default_site_hostname
+  aiof_api_hostname       = azurerm_app_service.aiof_api.default_site_hostname
+  aiof_metadata_hostname  = azurerm_app_service.aiof_metadata.default_site_hostname
 }
-*/
 
 
 /*
@@ -181,87 +185,6 @@ resource "azurerm_postgresql_firewall_rule" "aiof_dbadmin_rule" {
 
 
 /*
- * Application Insights
- */
-resource "azurerm_application_insights" "heimdall" {
-  name                = "heimdall-${local.env}"
-  location            = azurerm_resource_group.aiof_rg.location
-  resource_group_name = azurerm_resource_group.aiof_rg.name
-  application_type    = var.application_insights_application_type
-}
-
-resource "azurerm_application_insights_web_test" "heimdall-aiof-auth-health" {
-  name                    = "aiof-auth-health"
-  location                = azurerm_resource_group.aiof_rg.location
-  resource_group_name     = azurerm_resource_group.aiof_rg.name
-  application_insights_id = azurerm_application_insights.heimdall.id
-  kind                    = "ping"
-  frequency               = 300
-  timeout                 = 120
-  enabled                 = true
-  geo_locations           = ["us-ca-sjc-azr", "us-tx-sn1-azr", "us-il-ch1-azr", "us-va-ash-azr", "us-fl-mia-edge"]
-
-  configuration = <<XML
-  <WebTest Name="aiof-auth-health" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
-    <Items>
-      <Request Method="GET" Version="1.1" Url="https://${azurerm_app_service.aiof_auth.default_site_hostname}/health" ThinkTime="0" Timeout="120" ParseDependentRequests="False" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False"/>
-    </Items>
-  </WebTest>
-  XML
-
-  tags = {
-    "hidden-link:/subscriptions/ca878169-d059-41cb-a0f0-d2e714ea53b5/resourceGroups/aiof-dev/providers/microsoft.insights/components/heimdall-dev" = "Resource"
-  }
-}
-resource "azurerm_application_insights_web_test" "heimdall-aiof-api-health" {
-  name                    = "aiof-api-health"
-  location                = azurerm_resource_group.aiof_rg.location
-  resource_group_name     = azurerm_resource_group.aiof_rg.name
-  application_insights_id = azurerm_application_insights.heimdall.id
-  kind                    = "ping"
-  frequency               = 300
-  timeout                 = 120
-  enabled                 = true
-  geo_locations           = ["us-ca-sjc-azr", "us-tx-sn1-azr", "us-il-ch1-azr", "us-va-ash-azr", "us-fl-mia-edge"]
-
-  configuration = <<XML
-  <WebTest Name="aiof-auth-health" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
-    <Items>
-      <Request Method="GET" Version="1.1" Url="https://${azurerm_app_service.aiof_api.default_site_hostname}/health" ThinkTime="0" Timeout="120" ParseDependentRequests="False" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False"/>
-    </Items>
-  </WebTest>
-  XML
-
-  tags = {
-    "hidden-link:/subscriptions/ca878169-d059-41cb-a0f0-d2e714ea53b5/resourceGroups/aiof-dev/providers/microsoft.insights/components/heimdall-dev" = "Resource"
-  }
-}
-resource "azurerm_application_insights_web_test" "heimdall-aiof-metadata-health" {
-  name                    = "aiof-metadata-health"
-  location                = azurerm_resource_group.aiof_rg.location
-  resource_group_name     = azurerm_resource_group.aiof_rg.name
-  application_insights_id = azurerm_application_insights.heimdall.id
-  kind                    = "ping"
-  frequency               = 300
-  timeout                 = 120
-  enabled                 = true
-  geo_locations           = ["us-ca-sjc-azr", "us-tx-sn1-azr", "us-il-ch1-azr", "us-va-ash-azr", "us-fl-mia-edge"]
-
-  configuration = <<XML
-  <WebTest Name="aiof-metadata-health" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
-    <Items>
-      <Request Method="GET" Version="1.1" Url="https://${azurerm_app_service.aiof_metadata.default_site_hostname}/health" ThinkTime="0" Timeout="120" ParseDependentRequests="False" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False"/>
-    </Items>
-  </WebTest>
-  XML
-
-  tags = {
-    "hidden-link:/subscriptions/ca878169-d059-41cb-a0f0-d2e714ea53b5/resourceGroups/aiof-dev/providers/microsoft.insights/components/heimdall-dev" = "Resource"
-  }
-}
-
-
-/*
  * App Service
  */
 resource "azurerm_app_service_plan" "aiof_app_service_plan" {
@@ -279,24 +202,6 @@ resource "azurerm_app_service_plan" "aiof_app_service_plan" {
   tags = local.env_tags
 }
 
-/*resource "azurerm_app_service" "aiof_data" {
-  name                = "aiof-data-${local.env}"
-  location            = azurerm_resource_group.aiof_rg.location
-  resource_group_name = azurerm_resource_group.aiof_rg.name
-  app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
-
-  site_config {
-    always_on        = false
-    linux_fx_version = var.appservice_data_version
-  }
-
-  app_settings = {
-    "WEBSITES_PORT" = "80"
-  }
-
-  tags = local.env_tags
-}*/
-
 resource "azurerm_app_service" "aiof_auth" {
   name                = "aiof-auth-${local.env}"
   location            = azurerm_resource_group.aiof_rg.location
@@ -313,7 +218,7 @@ resource "azurerm_app_service" "aiof_auth" {
   }
 
   app_settings = {
-    "ApplicationInsights__InstrumentationKey" = azurerm_application_insights.heimdall.instrumentation_key
+    "ApplicationInsights__InstrumentationKey" = module.monitor.application_insights_instrumentation_key
     "FeatureManagement__RefreshToken"         = "true"
     "FeatureManagement__OpenId"               = "true"
     "FeatureManagement__MemCache"             = "true"
@@ -364,7 +269,7 @@ resource "azurerm_app_service" "aiof_api" {
   }
 
   app_settings = {
-    "ApplicationInsights__InstrumentationKey" = azurerm_application_insights.heimdall.instrumentation_key
+    "ApplicationInsights__InstrumentationKey" = module.monitor.application_insights_instrumentation_key
     "FeatureManagement__Asset"                = "true"
     "FeatureManagement__Goal"                 = "true"
     "FeatureManagement__Liability"            = "true"
