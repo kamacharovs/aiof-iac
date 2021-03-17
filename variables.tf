@@ -48,13 +48,6 @@ variable "app" {
   default     = "aiof"
 }
 
-variable "messaging_app" {
-  type        = string
-  description = "Messaging application name"
-  default     = "aiof-messaging"
-}
-
-
 variable "postgresql_sku_name" {
   type        = string
   description = "PostgreSQL Sku Name"
@@ -187,20 +180,5 @@ variable "open_api" {
     description_api   = "Aiof main api microservice"
     license_name_api  = "MIT"
     license_url_api   = "https://github.com/kamacharovs/aiof-api/blob/master/LICENSE"
-  }
-}
-
-/*
-Messaging service
-*/
-variable "messaging_sbns_sku" {
-  type        = map(string)
-  description = "The sku of the service bus namespace"
-
-  default     = {
-    dev   = "Basic"
-    qa    = "Basic"
-    stage = "Basic"
-    prod  = "Basic"
   }
 }
