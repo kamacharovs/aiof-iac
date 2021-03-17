@@ -121,7 +121,9 @@ resource "azurerm_key_vault_secret" "kv_jwt_public_key" {
   tags = local.env_tags
 }
 
-
+/*
+Monitor
+*/
 module "monitor" {
   source = "./modules/monitor"
 
@@ -140,47 +142,23 @@ module "monitor" {
 
 
 /*
- * SQL Database
- * - PostgreSQL server
- * - PostgreSQL database
- * - Virtual network rule for DB Admin
+Database
 */
-resource "azurerm_postgresql_server" "aiof_postgres_server" {
-  name                = "aiof-${local.env}"
-  location            = azurerm_resource_group.aiof_rg.location
-  resource_group_name = azurerm_resource_group.aiof_rg.name
- 
-  administrator_login          = var.db_admin_username
-  administrator_login_password = var.db_admin_password
+module "database" {
+  source = "./modules/database"
 
-  sku_name   = var.postgresql_sku_name
-  version    = var.postgresql_version
-  storage_mb = 5120
+  location  = local.location
+  env       = local.env
+  env_tags  = local.env_tags
 
-  backup_retention_days        = 7
-  geo_redundant_backup_enabled = false
-  auto_grow_enabled            = false
+  rg = {
+    location  = azurerm_resource_group.aiof_rg.location
+    name      = azurerm_resource_group.aiof_rg.name
+  }
 
-  public_network_access_enabled    = true
-  ssl_enforcement_enabled          = false
-
-  tags = local.env_tags
-}
-
-resource "azurerm_postgresql_database" "aiof_postgres_db" {
-  name                = "aiof"
-  resource_group_name = azurerm_resource_group.aiof_rg.name
-  server_name         = azurerm_postgresql_server.aiof_postgres_server.name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
-}
-
-resource "azurerm_postgresql_firewall_rule" "aiof_dbadmin_rule" {
-  name                = "dbadmin"
-  resource_group_name = azurerm_resource_group.aiof_rg.name
-  server_name         = azurerm_postgresql_server.aiof_postgres_server.name
-  start_ip_address    = var.db_admin_start_ip
-  end_ip_address      = var.db_admin_start_ip
+  db_admin_username = var.db_admin_username
+  db_admin_password = var.db_admin_password
+  db_admin_start_ip = var.db_admin_start_ip
 }
 
 

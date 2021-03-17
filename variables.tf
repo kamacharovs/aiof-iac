@@ -48,18 +48,6 @@ variable "app" {
   default     = "aiof"
 }
 
-variable "postgresql_sku_name" {
-  type        = string
-  description = "PostgreSQL Sku Name"
-  default     = "B_Gen5_2"
-}
-
-variable "postgresql_version" {
-  type        = string
-  description = "PostgreSQL version"
-  default     = "11"
-}
-
 variable "postgresql_constring_name" {
   type        = string
   description = "PostgreSQL connection string name"
