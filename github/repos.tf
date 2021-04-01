@@ -1,3 +1,11 @@
+locals {
+  default_branch      = "main"
+  github_pages_branch = "github-pages"
+  github_pages_path   = "/docs"
+
+  default_readme      = file("./assets/default_readme.md")
+}
+
 resource "github_repository" "aiof_metadata" {
   name        = "aiof-metadata"
   description = "All in one finance data crunching backend API"
@@ -9,9 +17,11 @@ resource "github_repository" "aiof_metadata" {
   has_downloads       = true
   archive_on_destroy  = true
 
-  allow_merge_commit  = false
-  allow_rebase_merge  = false
-  allow_squash_merge  = false
+  allow_merge_commit  = true
+  allow_rebase_merge  = true
+  allow_squash_merge  = true
+
+  vulnerability_alerts  = true
 
   topics = [
     "docker",
@@ -34,9 +44,11 @@ resource "github_repository" "aiof_messaging" {
   has_downloads       = true
   archive_on_destroy  = true
 
-  allow_merge_commit  = false
-  allow_rebase_merge  = false
-  allow_squash_merge  = false
+  allow_merge_commit  = true
+  allow_rebase_merge  = true
+  allow_squash_merge  = true
+
+  vulnerability_alerts  = true
 
   topics = [
     "azure-functions-v3",
@@ -57,9 +69,11 @@ resource "github_repository" "aiof_iac" {
   has_downloads       = true
   archive_on_destroy  = true
 
-  allow_merge_commit  = false
-  allow_rebase_merge  = false
-  allow_squash_merge  = false
+  allow_merge_commit  = true
+  allow_rebase_merge  = true
+  allow_squash_merge  = true
+
+  vulnerability_alerts  = true
 
   topics = [
     "terraform",
@@ -82,9 +96,11 @@ resource "github_repository" "aiof_portal" {
   has_downloads       = true
   archive_on_destroy  = true
 
-  allow_merge_commit  = false
-  allow_rebase_merge  = false
-  allow_squash_merge  = false
+  allow_merge_commit  = true
+  allow_rebase_merge  = true
+  allow_squash_merge  = true
+
+  vulnerability_alerts  = true
 
   topics = [
     "react",
@@ -92,4 +108,55 @@ resource "github_repository" "aiof_portal" {
     "docker",
     "frontend"
   ]
+}
+
+resource "github_repository" "aiof_asset" {
+  name        = "aiof-asset"
+  description = "All in one finance asset microservice"
+
+  visibility          = "public"
+  has_issues          = true
+  has_projects        = true
+  has_wiki            = true
+  has_downloads       = true
+  archive_on_destroy  = true
+
+  allow_merge_commit  = true
+  allow_rebase_merge  = true
+  allow_squash_merge  = true
+
+  gitignore_template  = "VisualStudio"
+  license_template    = "mit"
+
+  vulnerability_alerts  = true
+
+  pages {
+    source {
+      branch  = local.github_pages_branch
+      path    = local.github_pages_path
+    }
+  }
+
+  topics = [
+    "docker",
+    "finance",
+    "csharp",
+    "dotnet5",
+    "postgresql",
+    "azure-devops",
+    "azure-pipelines"
+  ]
+}
+resource "github_branch" "aiof_asset_github_pages" {
+  repository    = github_repository.aiof_asset.name
+  branch        = local.github_pages_branch
+  source_branch = local.default_branch
+}
+resource "github_repository_file" "aiof_asset_readme" {
+  repository          = github_repository.aiof_asset.name
+  branch              = local.default_branch
+  file                = "README.md"
+  content             = local.default_readme
+  commit_message      = "add README"
+  overwrite_on_create = false
 }

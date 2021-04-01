@@ -1,3 +1,7 @@
+data "github_user" "current_user" {
+  username = ""
+}
+
 data "github_user" "dkamacharov19" {
   username = "dkamacharov19"
 }
