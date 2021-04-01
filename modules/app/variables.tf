@@ -44,6 +44,13 @@ variable "appservice_api_version" {
   description = "The version of API microservice"
   default     = "DOCKER|gkama/aiof-api:latest"
 }
+
+variable "appservice_asset_version" {
+  type        = string
+  description = "The version of asset microservice"
+  default     = "DOCKER|gkama/aiof-asset:latest"
+}
+
 variable "appservice_metadata_version" {
   type        = string
   description = "The version of Metadata microservice"
@@ -93,5 +100,11 @@ variable "open_api" {
     description_api   = "Aiof main api microservice"
     license_name_api  = "MIT"
     license_url_api   = "https://github.com/kamacharovs/aiof-api/blob/master/LICENSE"
+
+    version_asset       = "v1.0.0-alpha"
+    title_asset         = "aiof.asset"
+    description_asset   = "All in one finance asset microservice"
+    license_name_asset  = "MIT"
+    license_url_asset   = "https://github.com/kamacharovs/aiof-asset/blob/master/LICENSE"
   }
 }
