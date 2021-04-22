@@ -154,7 +154,7 @@ resource "azurerm_app_service" "aiof_asset" {
 
   app_settings = {
     "ApplicationInsights__InstrumentationKey" = var.application_insights_instrumentation_key
-    "Data__PostgreSQL"                        = ""
+    "Data__PostgreSQL"                        = var.database_connection_string
     "Jwt__Issuer"                             = "aiof:auth"
     "Jwt__Audience"                           = "aiof:auth:audience"
     "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
