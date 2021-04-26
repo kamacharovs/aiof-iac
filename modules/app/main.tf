@@ -33,7 +33,7 @@ resource "azurerm_app_service" "aiof_auth" {
     "FeatureManagement__RefreshToken"         = "true"
     "FeatureManagement__OpenId"               = "true"
     "FeatureManagement__MemCache"             = "true"
-    "Data__PostgreSQL"                        = ""
+    "Data__PostgreSQL"                        = var.database_connection_string
     "MemCache__Ttl"                           = "900"
     "Jwt__Expires"                            = "900"
     "Jwt__RefreshExpires"                     = "604800"
@@ -86,7 +86,7 @@ resource "azurerm_app_service" "aiof_api" {
     "FeatureManagement__Liability"            = "true"
     "FeatureManagement__Account"              = "true"
     "FeatureManagement__UserDependent"        = "true"
-    "Data__PostgreSQL"                        = ""
+    "Data__PostgreSQL"                        = var.database_connection_string
     "Jwt__Issuer"                             = "aiof:auth"
     "Jwt__Audience"                           = "aiof:auth:audience"
     "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
@@ -154,7 +154,7 @@ resource "azurerm_app_service" "aiof_asset" {
 
   app_settings = {
     "ApplicationInsights__InstrumentationKey" = var.application_insights_instrumentation_key
-    "Data__PostgreSQL"                        = ""
+    "Data__PostgreSQL"                        = var.database_connection_string
     "Jwt__Issuer"                             = "aiof:auth"
     "Jwt__Audience"                           = "aiof:auth:audience"
     "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value

@@ -23,6 +23,11 @@ variable "application_insights_instrumentation_key" {
   description = "Application insights instrumentation key"
 }
 
+variable "database_connection_string" {
+  type        = string
+  description = "Database connection string"
+}
+
 variable "postgresql_constring_name" {
   type        = string
   description = "PostgreSQL connection string name"

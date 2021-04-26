@@ -15,12 +15,14 @@ steps:
     command: validate
     workingDirectory: $(agent.builddirectory)
 
-- task: CopyFiles@2
-  displayName: copy files
+- task: ArchiveFiles@2
+  displayName: archive
   inputs:
-    sourceFolder: $(agent.builddirectory)
-    contents: '**'
-    targetFolder: $(build.artifactstagingdirectory)
+    rootFolderOrFile: $(agent.builddirectory)
+    includeRootFolder: false
+    archiveType: zip
+    archiveFile: $(build.artifactstagingdirectory)/iac-$(build.buildid).zip
+    replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
   displayName: publish
