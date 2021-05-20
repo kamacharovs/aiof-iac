@@ -182,7 +182,7 @@ module "app" {
 Messaging
 */
 module "messaging" {
-  source = "./modules/messaging"
+  source    = "./modules/messaging"
 
   location  = local.location
   env       = local.env
@@ -192,4 +192,15 @@ module "messaging" {
   depends_on = [
     module.app
   ]
+}
+
+
+/*
+Eventing
+*/
+module "eventing" {
+  source    = "./modules/eventing"
+
+  location  = local.location
+  env       = local.env
 }
