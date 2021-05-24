@@ -2,7 +2,7 @@
 Eventing
 - Resource group
 - Service bus namespace
-- Service bus topic - sender
+- Service bus topic - emitter
 - Service bus topic subscription - assets
 - Service bus topic subscription rule - assets
 */
@@ -26,8 +26,8 @@ resource "azurerm_servicebus_namespace" "eventing_asb" {
   }
 }
 
-resource "azurerm_servicebus_topic" "eventing_asb_sender_topic" {
-  name                = "sender-topic"
+resource "azurerm_servicebus_topic" "eventing_asb_emitter_topic" {
+  name                = "emitter-topic"
   resource_group_name = azurerm_resource_group.eventing_rg.name
   namespace_name      = azurerm_servicebus_namespace.eventing_asb.name
 
@@ -41,11 +41,11 @@ resource "azurerm_servicebus_topic" "eventing_asb_sender_topic" {
   support_ordering              = false
 }
 
-resource "azurerm_servicebus_subscription" "eventing_asb_sender_topic_asset_sub" {
+resource "azurerm_servicebus_subscription" "eventing_asb_emitter_topic_asset_sub" {
   name                = "assets"
   resource_group_name = azurerm_resource_group.eventing_rg.name
   namespace_name      = azurerm_servicebus_namespace.eventing_asb.name
-  topic_name          = azurerm_servicebus_topic.eventing_asb_sender_topic.name
+  topic_name          = azurerm_servicebus_topic.eventing_asb_emitter_topic.name
 
   max_delivery_count    = 3
   default_message_ttl   = "P14D"
@@ -55,12 +55,12 @@ resource "azurerm_servicebus_subscription" "eventing_asb_sender_topic_asset_sub"
   enable_batched_operations             = false
   requires_session                      = false
 }
-resource "azurerm_servicebus_subscription_rule" "eventing_asb_sender_topic_asset_sub_rule" {
+resource "azurerm_servicebus_subscription_rule" "eventing_asb_emitter_topic_asset_sub_rule" {
   name                = "assets"
   resource_group_name = azurerm_resource_group.eventing_rg.name
   namespace_name      = azurerm_servicebus_namespace.eventing_asb.name
-  topic_name          = azurerm_servicebus_topic.eventing_asb_sender_topic.name
-  subscription_name   = azurerm_servicebus_subscription.eventing_asb_sender_topic_asset_sub.name
+  topic_name          = azurerm_servicebus_topic.eventing_asb_emitter_topic.name
+  subscription_name   = azurerm_servicebus_subscription.eventing_asb_emitter_topic_asset_sub.name
 
   filter_type         = "SqlFilter"
   sql_filter          = "eventType like 'Asset%'"
