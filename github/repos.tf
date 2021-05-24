@@ -152,11 +152,39 @@ resource "github_branch" "aiof_asset_github_pages" {
   branch        = local.github_pages_branch
   source_branch = local.default_branch
 }
-resource "github_repository_file" "aiof_asset_readme" {
-  repository          = github_repository.aiof_asset.name
-  branch              = local.default_branch
-  file                = "README.md"
-  content             = local.default_readme
-  commit_message      = "add README"
-  overwrite_on_create = false
+
+/*
+Eventing emitter
+*/
+resource "github_repository" "aiof_eventing_emitter" {
+  name        = "aiof-eventing-emitter"
+  description = "All in one finance eventing emitter"
+
+  visibility          = "public"
+  has_issues          = true
+  has_projects        = true
+  has_wiki            = true
+  has_downloads       = true
+  archive_on_destroy  = true
+
+  allow_merge_commit  = true
+  allow_rebase_merge  = true
+  allow_squash_merge  = true
+
+  gitignore_template  = "VisualStudio"
+  license_template    = "mit"
+
+  vulnerability_alerts  = true
+
+  topics = [
+    "docker",
+    "finance",
+    "csharp",
+    "dotnet5",
+    "azure-functions",
+    "event-driven",
+    "event-emitter",
+    "azure-devops",
+    "azure-pipelines"
+  ]
 }
