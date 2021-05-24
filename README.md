@@ -48,6 +48,14 @@ Module import is a little different
 terraform import -lock=false module.{Module Name}.{Terraform Resource}.{Terraform Alias} {Azure Resource Id}
 ```
 
+### State rm
+
+You can use `terraform state rm` in the less common situation where you wish to remove a binding to an existing remote object without first destroying it, which will effectively make Terraform "forget" the object while it continues to exist in the remote system
+
+```ps
+terraform state rm -lock=false {Terraform Resource}.{Terraform Alias}
+```
+
 ### Terraform reference
 
 - [azurerm_resource_group](https://www.terraform.io/docs/providers/azurerm/r/resource_group.html)
