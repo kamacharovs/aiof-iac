@@ -158,7 +158,6 @@ resource "azurerm_app_service" "aiof_asset" {
     "Jwt__Issuer"                             = "aiof:auth"
     "Jwt__Audience"                           = "aiof:auth:audience"
     "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
-    "OpenApi__Version"                        = var.open_api.version_asset
     "OpenApi__Title"                          = var.open_api.title_asset
     "OpenApi__Description"                    = var.open_api.description_asset
     "OpenApi__Contact__Name"                  = var.open_api.contact_name

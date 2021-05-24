@@ -106,7 +106,6 @@ variable "open_api" {
     license_name_api  = "MIT"
     license_url_api   = "https://github.com/kamacharovs/aiof-api/blob/master/LICENSE"
 
-    version_asset       = "v1.0.0-alpha"
     title_asset         = "aiof.asset"
     description_asset   = "All in one finance asset microservice"
     license_name_asset  = "MIT"
