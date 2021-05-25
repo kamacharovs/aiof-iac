@@ -64,7 +64,7 @@ resource "azurerm_servicebus_subscription_rule" "eventing_asb_emitter_topic_asse
   subscription_name   = azurerm_servicebus_subscription.eventing_asb_emitter_topic_asset_sub.name
 
   filter_type         = "SqlFilter"
-  sql_filter          = "eventType like 'Asset%'"
+  sql_filter          = "eventType in ('AssetAdded')"
 }
 
 resource "azurerm_storage_account" "eventing_emitter_sa" {
@@ -84,5 +84,9 @@ resource "azurerm_storage_account" "eventing_emitter_sa" {
 
 resource "azurerm_storage_table" "eventing_emitter_sa_table_config" {
   name                 = "EmitterConfig"
+  storage_account_name = azurerm_storage_account.eventing_emitter_sa.name
+}
+resource "azurerm_storage_table" "eventing_emitter_sa_table_log" {
+  name                 = "EventLog"
   storage_account_name = azurerm_storage_account.eventing_emitter_sa.name
 }
