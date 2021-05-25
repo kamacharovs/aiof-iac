@@ -90,3 +90,24 @@ resource "azurerm_storage_table" "eventing_emitter_sa_table_log" {
   name                 = "EventLog"
   storage_account_name = azurerm_storage_account.eventing_emitter_sa.name
 }
+
+resource "azurerm_function_app" "eventing_emitter_fa" {
+  name                       = "aiof-eventing-emitter-${var.env}"
+  location                   = azurerm_resource_group.eventing_rg.location
+  resource_group_name        = azurerm_resource_group.eventing_rg.name
+
+  app_service_plan_id        = var.app_service_plan_id
+  storage_account_name       = azurerm_storage_account.eventing_emitter_sa.name
+  storage_account_access_key = azurerm_storage_account.eventing_emitter_sa.primary_access_key
+  os_type                    = "linux"
+
+  app_settings  = {
+    APPINSIGHTS_INSTRUMENTATIONKEY        = var.application_insights_instrumentation_key
+    APPLICATIONINSIGHTS_CONNECTION_STRING = var.application_insights_connection_string
+    StorageConnectionString               = azurerm_storage_account.eventing_emitter_sa.primary_connection_string
+    ServiceBusConnection                  = azurerm_servicebus_namespace.eventing_asb.default_primary_connection_string
+    EmitterTopicName                      = azurerm_servicebus_topic.eventing_asb_emitter_topic.name
+    EmitterConfigTableName                = azurerm_storage_table.eventing_emitter_sa_table_config.name
+    EmitterLogTableName                   = azurerm_storage_table.eventing_emitter_sa_table_log.name
+  }
+}

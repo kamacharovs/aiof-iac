@@ -187,7 +187,7 @@ module "messaging" {
   location  = local.location
   env       = local.env
 
-  app_service_plan_id = module.app.aiof_app_service_plan_id
+  app_service_plan_id                       = module.app.aiof_app_service_plan_id
 
   depends_on = [
     module.app
@@ -203,4 +203,12 @@ module "eventing" {
 
   location  = local.location
   env       = local.env
+
+  app_service_plan_id                       = module.app.aiof_app_service_plan_id
+  application_insights_instrumentation_key  = azurerm_application_insights.heimdall.instrumentation_key
+  application_insights_connection_string    = azurerm_application_insights.heimdall.connection_string
+
+  depends_on = [
+    module.app
+  ]
 }

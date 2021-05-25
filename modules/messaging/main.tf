@@ -104,7 +104,7 @@ resource "azurerm_storage_account" "messaging_sa" {
   }
 }
 
-resource "azurerm_function_app" "messaging-fa" {
+resource "azurerm_function_app" "messaging_fa" {
   name                       = "aiof-messaging-${var.env}"
   location                   = azurerm_resource_group.messaging_rg.location
   resource_group_name        = azurerm_resource_group.messaging_rg.name
