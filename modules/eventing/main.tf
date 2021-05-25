@@ -5,6 +5,7 @@ Eventing
 - Service bus topic - emitter
 - Service bus topic subscription - assets
 - Service bus topic subscription rule - assets
+- Storage account
 */
 resource "azurerm_resource_group" "eventing_rg" {
   name     = "aiof-eventing-${var.env}"
@@ -64,4 +65,24 @@ resource "azurerm_servicebus_subscription_rule" "eventing_asb_emitter_topic_asse
 
   filter_type         = "SqlFilter"
   sql_filter          = "eventType like 'Asset%'"
+}
+
+resource "azurerm_storage_account" "eventing_emitter_sa" {
+  name                     = "aiofeventingemitter${var.env}"
+  location                 = azurerm_resource_group.eventing_rg.location
+  resource_group_name      = azurerm_resource_group.eventing_rg.name
+
+  account_kind             = "StorageV2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  access_tier              = "Hot"
+
+  tags = {
+    env = var.env
+  }
+}
+
+resource "azurerm_storage_table" "eventing_emitter_sa_table_config" {
+  name                 = "EmitterConfig"
+  storage_account_name = azurerm_storage_account.eventing_emitter_sa.name
 }
