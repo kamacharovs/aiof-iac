@@ -64,7 +64,7 @@ resource "azurerm_servicebus_subscription_rule" "eventing_asb_emitter_topic_asse
   subscription_name   = azurerm_servicebus_subscription.eventing_asb_emitter_topic_asset_sub.name
 
   filter_type         = "SqlFilter"
-  sql_filter          = "eventType in ('AssetAdded')"
+  sql_filter          = "eventtype in ('AssetAdded', 'AssetUpdated', 'AssetDeleted')"
 }
 
 resource "azurerm_storage_account" "eventing_emitter_sa" {
@@ -102,6 +102,9 @@ resource "azurerm_function_app" "eventing_emitter_fa" {
   os_type                    = "linux"
 
   app_settings  = {
+    FUNCTIONS_WORKER_RUNTIME              = "dotnet"
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE   = "true"
+    WEBSITE_ENABLE_SYNC_UPDATE_SITE       = "true"
     APPINSIGHTS_INSTRUMENTATIONKEY        = var.application_insights_instrumentation_key
     APPLICATIONINSIGHTS_CONNECTION_STRING = var.application_insights_connection_string
     StorageConnectionString               = azurerm_storage_account.eventing_emitter_sa.primary_connection_string
