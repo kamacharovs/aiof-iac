@@ -214,6 +214,8 @@ module "app" {
   appsettings_auth_jwt_public_key_value     = var.appsettings_auth_jwt_public_key_value
   application_insights_instrumentation_key  = azurerm_application_insights.heimdall.instrumentation_key
   database_connection_string                = module.database.database_connection_string
+  emitter_hostname                          = module.eventing.emitter_hostname
+  emitter_function_key                      = module.eventing.emitter_function_key
 
   depends_on = [
     azurerm_application_insights.heimdall,

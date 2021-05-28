@@ -114,3 +114,8 @@ resource "azurerm_function_app" "eventing_emitter_fa" {
     EmitterLogTableName                   = azurerm_storage_table.eventing_emitter_sa_table_log.name
   }
 }
+
+data "azurerm_function_app_host_keys" "eventing_emitter_fa_host_keys" {
+  name                = azurerm_function_app.eventing_emitter_fa.name
+  resource_group_name = azurerm_resource_group.eventing_rg.name
+}

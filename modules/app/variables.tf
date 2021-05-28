@@ -88,6 +88,18 @@ variable "appsettings_auth_jwt_public_key_value" {
 }
 
 /*
+Eventing
+*/
+variable "emitter_hostname" {
+  type        = string
+  description = "Eventing host name"
+}
+variable "emitter_function_key" {
+  type        = string
+  description = "Eventing emitter function key"
+}
+
+/*
 Microservices OpenAPI
 */
 variable "open_api" {
