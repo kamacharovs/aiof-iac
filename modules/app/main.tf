@@ -1,23 +1,8 @@
-resource "azurerm_app_service_plan" "aiof_app_service_plan" {
-  name                = "aiof-${var.env}-service-plan"
-  location            = var.rg.location
-  resource_group_name = var.rg.name
-  kind                = "Linux"
-  reserved            = true
-
-  sku {
-    tier = "Basic"
-    size = "B1"
-  }
-
-  tags = var.env_tags
-}
-
 resource "azurerm_app_service" "aiof_auth" {
   name                = "aiof-auth-${var.env}"
   location            = var.rg.location
   resource_group_name = var.rg.name
-  app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
+  app_service_plan_id = var.app_service_plan_id
 
   site_config {
     always_on        = false
@@ -68,7 +53,7 @@ resource "azurerm_app_service" "aiof_api" {
   name                = "aiof-api-${var.env}"
   location            = var.rg.location
   resource_group_name = var.rg.name
-  app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
+  app_service_plan_id = var.app_service_plan_id
 
   site_config {
     always_on        = false
@@ -119,7 +104,7 @@ resource "azurerm_app_service" "aiof_metadata" {
   name                = "aiof-metadata-${var.env}"
   location            = var.rg.location
   resource_group_name = var.rg.name
-  app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
+  app_service_plan_id = var.app_service_plan_id
 
   site_config {
     always_on        = false
@@ -141,7 +126,7 @@ resource "azurerm_app_service" "aiof_asset" {
   name                = "aiof-asset-${var.env}"
   location            = var.rg.location
   resource_group_name = var.rg.name
-  app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
+  app_service_plan_id = var.app_service_plan_id
 
   site_config {
     always_on        = false
@@ -174,7 +159,7 @@ resource "azurerm_app_service" "aiof_portal" {
   name                = "aiof-portal-${var.env}"
   location            = var.rg.location
   resource_group_name = var.rg.name
-  app_service_plan_id = azurerm_app_service_plan.aiof_app_service_plan.id
+  app_service_plan_id = var.app_service_plan_id
 
   site_config {
     always_on        = false

@@ -129,6 +129,21 @@ resource "azurerm_application_insights" "heimdall" {
   application_type    = "web"
 }
 
+resource "azurerm_app_service_plan" "aiof_app_service_plan" {
+  name                = "aiof-service-plan-${local.env}"
+  location            = azurerm_resource_group.aiof_rg.location
+  resource_group_name = azurerm_resource_group.aiof_rg.name
+  kind                = "Linux"
+  reserved            = true
+
+  sku {
+    tier = "Basic"
+    size = "B1"
+  }
+
+  tags = local.env_tags
+}
+
 
 /*
 Database
@@ -152,6 +167,34 @@ module "database" {
 
 
 /*
+Messaging
+*/
+module "messaging" {
+  source    = "./modules/messaging"
+
+  location  = local.location
+  env       = local.env
+
+  app_service_plan_id   = azurerm_app_service_plan.aiof_app_service_plan.id
+}
+
+
+/*
+Eventing
+*/
+module "eventing" {
+  source    = "./modules/eventing"
+
+  location  = local.location
+  env       = local.env
+
+  app_service_plan_id                       = azurerm_app_service_plan.aiof_app_service_plan.id
+  application_insights_instrumentation_key  = azurerm_application_insights.heimdall.instrumentation_key
+  application_insights_connection_string    = azurerm_application_insights.heimdall.connection_string
+}
+
+
+/*
 App
 */
 module "app" {
@@ -166,6 +209,7 @@ module "app" {
     name      = azurerm_resource_group.aiof_rg.name
   }
 
+  app_service_plan_id                       = azurerm_app_service_plan.aiof_app_service_plan.id
   appsettings_auth_jwt_private_key_value    = var.appsettings_auth_jwt_private_key_value
   appsettings_auth_jwt_public_key_value     = var.appsettings_auth_jwt_public_key_value
   application_insights_instrumentation_key  = azurerm_application_insights.heimdall.instrumentation_key
@@ -173,42 +217,8 @@ module "app" {
 
   depends_on = [
     azurerm_application_insights.heimdall,
-    module.database
-  ]
-}
-
-
-/*
-Messaging
-*/
-module "messaging" {
-  source    = "./modules/messaging"
-
-  location  = local.location
-  env       = local.env
-
-  app_service_plan_id                       = module.app.aiof_app_service_plan_id
-
-  depends_on = [
-    module.app
-  ]
-}
-
-
-/*
-Eventing
-*/
-module "eventing" {
-  source    = "./modules/eventing"
-
-  location  = local.location
-  env       = local.env
-
-  app_service_plan_id                       = module.app.aiof_app_service_plan_id
-  application_insights_instrumentation_key  = azurerm_application_insights.heimdall.instrumentation_key
-  application_insights_connection_string    = azurerm_application_insights.heimdall.connection_string
-
-  depends_on = [
-    module.app
+    module.database,
+    module.messaging,
+    module.eventing
   ]
 }

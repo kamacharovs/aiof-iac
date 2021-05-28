@@ -18,6 +18,11 @@ variable "rg" {
   description = "Resource group"
 }
 
+variable "app_service_plan_id" {
+  type        = string
+  description = "App service plan id"
+}
+
 variable "application_insights_instrumentation_key" {
   type        = string
   description = "Application insights instrumentation key"
