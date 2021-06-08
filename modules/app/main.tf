@@ -139,6 +139,7 @@ resource "azurerm_app_service" "aiof_asset" {
 
   app_settings = {
     "ApplicationInsights__InstrumentationKey" = var.application_insights_instrumentation_key
+    "FeatureManagement__Eventing"             = true
     "Data__PostgreSQL"                        = var.database_connection_string
     "Eventing__BaseUrl"                       = "https://${var.emitter_hostname}/api"
     "Eventing__FunctionKeyHeaderName"         = "x-functions-key"
