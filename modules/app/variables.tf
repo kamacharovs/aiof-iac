@@ -111,7 +111,6 @@ variable "open_api" {
     contact_email = "gkamacharov@aiof.com"
     contact_url   = "https://github.com/gkama"
 
-    version_auth      = "v1.0.0-alpha"
     title_auth        = "aiof.auth"
     description_auth  = "Aiof authentication microservice"
     license_name_auth = "MIT"

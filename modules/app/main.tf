@@ -19,7 +19,6 @@ resource "azurerm_app_service" "aiof_auth" {
     "FeatureManagement__OpenId"               = "true"
     "FeatureManagement__MemCache"             = "true"
     "Data__PostgreSQL"                        = var.database_connection_string
-    "MemCache__Ttl"                           = "900"
     "Jwt__Expires"                            = "900"
     "Jwt__RefreshExpires"                     = "604800"
     "Jwt__Type"                               = "Bearer"
@@ -30,7 +29,6 @@ resource "azurerm_app_service" "aiof_auth" {
     "Hash__Iterations"                        = "10000"
     "Hash__SaltSize"                          = "16"
     "Hash__KeySize"                           = "32"
-    "OpenApi__Version"                        = var.open_api.version_auth
     "OpenApi__Title"                          = var.open_api.title_auth
     "OpenApi__Description"                    = var.open_api.description_auth
     "OpenApi__Contact__Name"                  = var.open_api.contact_name
