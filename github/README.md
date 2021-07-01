@@ -20,14 +20,20 @@ organization    = "yourorgnamehere"
 To execute the scripts, first you need to initialize the provider
 
 ```ps
-terraform init
+terraform init -lock=false
+```
+
+To update from an existing version; for example, going from `v4.5.0` to `v4.5.1`, you must run the following
+
+```ps
+terraform init -upgrade -lock=false
 ```
 
 After `terraform init` you can run a plan and apply (if needed)
 
 ```ps
-terraform plan -out=tfplan
-terraform apply tfplan
+terraform plan -lock=false -out=tfplan
+terraform apply -lock=false tfplan
 ```
 
 ## Documentation
