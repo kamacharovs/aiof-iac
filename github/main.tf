@@ -2,14 +2,14 @@ terraform {
   required_providers {
     github = {
       source = "integrations/github"
-      version = "4.5.0"
+      version = "4.12.1"
     }
   }
 }
 
 provider "github" {
-  token         = var.token
-  organization  = var.organization
+  token   = var.token
+  owner   = var.organization
 }
 
 
