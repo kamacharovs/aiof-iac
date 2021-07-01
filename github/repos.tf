@@ -3,9 +3,16 @@ locals {
   github_pages_branch = "github-pages"
   github_pages_path   = "/docs"
 
-  default_readme      = file("./assets/default_readme.md")
+  dev_az_rg           = "aiof-dev"
+  dev                 = {
+    portal_app_name   = "aiof-portal-dev"
+    portal_app_rg     = local.dev_az_rg
+  }
 }
 
+/*
+Metadata
+*/
 resource "github_repository" "aiof_metadata" {
   name        = "aiof-metadata"
   description = "All in one finance data crunching backend API"
@@ -33,6 +40,9 @@ resource "github_repository" "aiof_metadata" {
   ]
 }
 
+/*
+Messaging
+*/
 resource "github_repository" "aiof_messaging" {
   name        = "aiof-messaging"
   description = "All in one finance messaging microservice"
@@ -58,6 +68,9 @@ resource "github_repository" "aiof_messaging" {
   ]
 }
 
+/*
+IaC
+*/
 resource "github_repository" "aiof_iac" {
   name        = "aiof-iac"
   description = "All in one finance infrastructure as code"
@@ -85,6 +98,11 @@ resource "github_repository" "aiof_iac" {
   ]
 }
 
+/*
+Portal
+  Environments
+  Environment variables
+*/
 resource "github_repository" "aiof_portal" {
   name        = "aiof-portal"
   description = "All in one finance front end UI"
@@ -110,6 +128,26 @@ resource "github_repository" "aiof_portal" {
   ]
 }
 
+resource "github_repository_environment" "aiof_portal_env_dev" {
+  environment = "dev"
+  repository  = github_repository.aiof_portal.name
+}
+resource "github_actions_environment_secret" "aiof_portal_ev_app_name" {
+  repository       = github_repository.aiof_portal.name
+  environment      = github_repository_environment.aiof_portal_env_dev.environment
+  secret_name      = "AZURE_APP_NAME"
+  plaintext_value  = local.dev.portal_app_name
+}
+resource "github_actions_environment_secret" "aiof_portal_ev_app_rg" {
+  repository       = github_repository.aiof_portal.name
+  environment      = github_repository_environment.aiof_portal_env_dev.environment
+  secret_name      = "AZURE_APP_RESOURCE_GROUP"
+  plaintext_value  = local.dev.portal_app_rg
+}
+
+/*
+Asset
+*/
 resource "github_repository" "aiof_asset" {
   name        = "aiof-asset"
   description = "All in one finance asset microservice"
