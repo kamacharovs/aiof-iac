@@ -5,6 +5,6 @@ terraform {
     container_name       = "aiofiaccd"
     key                  = "tf/terraform.tfstate"
 
-    # Do not set access_key here. Please set a command line variable TF_VAR_access_key
+    # Do not set access_key here. Please set a command line variable TF_VAR_storage_account_access_key
   }
 }
