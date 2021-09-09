@@ -211,6 +211,45 @@ resource "github_actions_environment_secret" "aiof_asset_ev_app_rg" {
 }
 
 /*
+Liability
+*/
+resource "github_repository" "aiof_liability" {
+  name        = "aiof-liability"
+  description = "All in one finance liability microservice"
+
+  visibility          = "public"
+  has_issues          = true
+  has_projects        = true
+  has_wiki            = true
+  has_downloads       = true
+  archive_on_destroy  = true
+
+  allow_merge_commit  = true
+  allow_rebase_merge  = true
+  allow_squash_merge  = true
+
+  gitignore_template  = "VisualStudio"
+  license_template    = "mit"
+
+  vulnerability_alerts  = true
+
+  topics = [
+    "docker",
+    "finance",
+    "csharp",
+    "dotnet5",
+    "postgresql",
+    "azure-devops",
+    "azure-pipelines"
+  ]
+}
+resource "github_branch" "aiof_liability_github_pages" {
+  repository    = github_repository.aiof_liability.name
+  branch        = local.github_pages_branch
+  source_branch = local.default_branch
+}
+
+/*
 Eventing emitter
 */
 resource "github_repository" "aiof_eventing_emitter" {
