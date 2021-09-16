@@ -126,5 +126,10 @@ variable "open_api" {
     description_asset   = "All in one finance asset microservice"
     license_name_asset  = "MIT"
     license_url_asset   = "https://github.com/kamacharovs/aiof-asset/blob/master/LICENSE"
+
+    title_liability         = "kamafi.liability"
+    description_liability   = "Kamacharov Finance liability microservice"
+    license_name_liability  = "MIT"
+    license_url_liability   = "https://github.com/kamacharovs/aiof-liability/blob/master/LICENSE"
   }
 }
