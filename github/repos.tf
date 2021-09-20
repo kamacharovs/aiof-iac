@@ -284,3 +284,33 @@ resource "github_repository" "aiof_eventing_emitter" {
     "azure-pipelines"
   ]
 }
+
+/*
+Core
+*/
+resource "github_repository" "kamafi_core" {
+  name        = "kamafi-core"
+  description = "Kamacharov Finance core library"
+
+  visibility          = "public"
+  has_issues          = true
+  has_projects        = true
+  has_wiki            = true
+  has_downloads       = true
+  archive_on_destroy  = true
+
+  allow_merge_commit  = false
+  allow_rebase_merge  = false
+  allow_squash_merge  = true
+
+  gitignore_template  = "VisualStudio"
+  license_template    = "mit"
+
+  vulnerability_alerts  = true
+
+  topics = [
+    "finance",
+    "csharp",
+    "dotnet5"
+  ]
+}
