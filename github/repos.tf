@@ -5,10 +5,12 @@ locals {
 
   dev_rg           = "aiof-dev"
   dev                 = {
-    portal_app_name   = "aiof-portal-dev"
-    portal_app_rg     = local.dev_rg
-    asset_app_name    = "aiof-asset-dev"
-    asset_app_rg      = local.dev_rg
+    portal_app_name     = "aiof-portal-dev"
+    portal_app_rg       = local.dev_rg
+    asset_app_name      = "aiof-asset-dev"
+    asset_app_rg        = local.dev_rg
+    liability_app_name  = "kamafi-liability-dev"
+    liability_app_rg    = local.dev_rg
   }
 }
 
@@ -247,6 +249,23 @@ resource "github_branch" "aiof_liability_github_pages" {
   repository    = github_repository.aiof_liability.name
   branch        = local.github_pages_branch
   source_branch = local.default_branch
+}
+
+resource "github_repository_environment" "aiof_liability_env_dev" {
+  environment = "dev"
+  repository  = github_repository.aiof_liability.name
+}
+resource "github_actions_environment_secret" "aiof_liability_ev_app_name" {
+  repository       = github_repository.aiof_liability.name
+  environment      = github_repository_environment.aiof_liability_env_dev.environment
+  secret_name      = "AZURE_APP_NAME"
+  plaintext_value  = local.dev.liability_app_name
+}
+resource "github_actions_environment_secret" "aiof_liability_ev_app_rg" {
+  repository       = github_repository.aiof_liability.name
+  environment      = github_repository_environment.aiof_liability_env_dev.environment
+  secret_name      = "AZURE_APP_RESOURCE_GROUP"
+  plaintext_value  = local.dev.liability_app_rg
 }
 
 /*

@@ -157,6 +157,39 @@ resource "azurerm_app_service" "aiof_asset" {
   tags = var.env_tags
 }
 
+resource "azurerm_app_service" "kamafi_liability" {
+  name                = "kamafi-liability-${var.env}"
+  location            = var.rg.location
+  resource_group_name = var.rg.name
+  app_service_plan_id = var.app_service_plan_id
+
+  site_config {
+    always_on        = false
+    linux_fx_version = var.appservice_asset_version
+
+    cors {
+      allowed_origins = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]
+    }
+  }
+
+  app_settings = {
+    "ApplicationInsights__InstrumentationKey" = var.application_insights_instrumentation_key
+    "Data__PostgreSQL"                        = var.database_connection_string
+    "Jwt__Issuer"                             = "aiof:auth"
+    "Jwt__Audience"                           = "aiof:auth:audience"
+    "Jwt__PublicKey"                          = var.appsettings_auth_jwt_public_key_value
+    "OpenApi__Title"                          = var.open_api.title_liability
+    "OpenApi__Description"                    = var.open_api.description_liability
+    "OpenApi__Contact__Name"                  = var.open_api.contact_name
+    "OpenApi__Contact__Email"                 = var.open_api.contact_email
+    "OpenApi__Contact__Url"                   = var.open_api.contact_url
+    "OpenApi__License__Name"                  = var.open_api.license_name_liability
+    "OpenApi__License__Url"                   = var.open_api.license_url_liability
+  }
+  
+  tags = var.env_tags
+}
+
 resource "azurerm_app_service" "aiof_portal" {
   name                = "aiof-portal-${var.env}"
   location            = var.rg.location
