@@ -165,7 +165,7 @@ resource "azurerm_app_service" "kamafi_liability" {
 
   site_config {
     always_on        = false
-    linux_fx_version = var.appservice_asset_version
+    linux_fx_version = var.appservice_liability_version
 
     cors {
       allowed_origins = ["https://${azurerm_app_service.aiof_portal.default_site_hostname}", var.cors_github_io]

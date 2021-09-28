@@ -61,6 +61,12 @@ variable "appservice_asset_version" {
   default     = "DOCKER|gkama/aiof-asset:latest"
 }
 
+variable "appservice_liability_version" {
+  type        = string
+  description = "The version of liability microservice"
+  default     = "DOCKER|gkama/kamafi-liability:latest"
+}
+
 variable "appservice_metadata_version" {
   type        = string
   description = "The version of Metadata microservice"
