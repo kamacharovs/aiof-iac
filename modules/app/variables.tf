@@ -136,6 +136,6 @@ variable "open_api" {
     title_liability         = "kamafi.liability"
     description_liability   = "Kamacharov Finance liability microservice"
     license_name_liability  = "MIT"
-    license_url_liability   = "https://github.com/kamacharovs/aiof-liability/blob/master/LICENSE"
+    license_url_liability   = "https://github.com/kamacharovs/kamafi-liability/blob/master/LICENSE"
   }
 }
