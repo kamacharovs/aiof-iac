@@ -215,9 +215,9 @@ resource "github_actions_environment_secret" "aiof_asset_ev_app_rg" {
 /*
 Liability
 */
-resource "github_repository" "aiof_liability" {
-  name        = "aiof-liability"
-  description = "All in one finance liability microservice"
+resource "github_repository" "kamafi_liability" {
+  name        = "kamafi-liability"
+  description = "Kamacharov Finance liability microservice"
 
   visibility          = "public"
   has_issues          = true
@@ -226,14 +226,21 @@ resource "github_repository" "aiof_liability" {
   has_downloads       = true
   archive_on_destroy  = true
 
-  allow_merge_commit  = true
-  allow_rebase_merge  = true
+  allow_merge_commit  = false
+  allow_rebase_merge  = false
   allow_squash_merge  = true
 
   gitignore_template  = "VisualStudio"
   license_template    = "mit"
 
   vulnerability_alerts  = true
+
+  pages {
+    source {
+      branch  = local.github_pages_branch
+      path    = local.github_pages_path
+    }
+  }
 
   topics = [
     "docker",
@@ -245,25 +252,25 @@ resource "github_repository" "aiof_liability" {
     "azure-pipelines"
   ]
 }
-resource "github_branch" "aiof_liability_github_pages" {
-  repository    = github_repository.aiof_liability.name
+resource "github_branch" "kamafi_liability_github_pages" {
+  repository    = github_repository.kamafi_liability.name
   branch        = local.github_pages_branch
   source_branch = local.default_branch
 }
 
-resource "github_repository_environment" "aiof_liability_env_dev" {
+resource "github_repository_environment" "kamafi_liability_env_dev" {
   environment = "dev"
-  repository  = github_repository.aiof_liability.name
+  repository  = github_repository.kamafi_liability.name
 }
-resource "github_actions_environment_secret" "aiof_liability_ev_app_name" {
-  repository       = github_repository.aiof_liability.name
-  environment      = github_repository_environment.aiof_liability_env_dev.environment
+resource "github_actions_environment_secret" "kamafi_liability_ev_app_name" {
+  repository       = github_repository.kamafi_liability.name
+  environment      = github_repository_environment.kamafi_liability_env_dev.environment
   secret_name      = "AZURE_APP_NAME"
   plaintext_value  = local.dev.liability_app_name
 }
-resource "github_actions_environment_secret" "aiof_liability_ev_app_rg" {
-  repository       = github_repository.aiof_liability.name
-  environment      = github_repository_environment.aiof_liability_env_dev.environment
+resource "github_actions_environment_secret" "kamafi_liability_ev_app_rg" {
+  repository       = github_repository.kamafi_liability.name
+  environment      = github_repository_environment.kamafi_liability_env_dev.environment
   secret_name      = "AZURE_APP_RESOURCE_GROUP"
   plaintext_value  = local.dev.liability_app_rg
 }
