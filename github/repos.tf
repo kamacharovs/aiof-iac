@@ -340,3 +340,31 @@ resource "github_repository" "kamafi_core" {
     "dotnet5"
   ]
 }
+
+/*
+Vault (Obsidian.md)
+*/
+resource "github_repository" "kamafi_vault" {
+  name        = "kamafi-vault"
+  description = "Kamacharov Finance obsidian.md vault"
+
+  visibility          = "public"
+  has_issues          = true
+  has_projects        = true
+  has_wiki            = true
+  has_downloads       = true
+  archive_on_destroy  = true
+
+  allow_merge_commit  = false
+  allow_rebase_merge  = false
+  allow_squash_merge  = true
+
+  vulnerability_alerts  = true
+
+  topics = [
+    "finance",
+    "documentation",
+    "obsidian-md",
+    "markdown"
+  ]
+}
