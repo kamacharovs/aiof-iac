@@ -359,6 +359,9 @@ resource "github_repository" "kamafi_vault" {
   allow_rebase_merge  = false
   allow_squash_merge  = true
 
+  gitignore_template  = "VisualStudio"
+  license_template    = "mit"
+
   vulnerability_alerts  = true
 
   topics = [
